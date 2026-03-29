@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
-export type InvoiceStatus = "draft" | "sent" | "paid" | "overdue" | "cancelled";
+export type InvoiceStatus =
+  | "draft"
+  | "sent"
+  | "paid"
+  | "overdue"
+  | "cancelled";
 
 export type InvoiceRow = {
   id: string;
@@ -18,6 +23,40 @@ export type InvoiceRow = {
   clients: { name: string; company: string | null } | null;
 };
 
+export type InvoiceItem = {
+  id: string;
+  description: string;
+  quantity: number;
+  unit_price: number;
+  amount: number;
+  sort_order: number;
+};
+
+export type InvoiceDetail = {
+  id: string;
+  invoice_number: string;
+  status: InvoiceStatus;
+  issue_date: string;
+  due_date: string;
+  subtotal: number;
+  tax_rate: number;
+  tax_amount: number;
+  discount_amount: number;
+  total: number;
+  notes: string | null;
+  terms: string | null;
+  client_id: string | null;
+  clients: {
+    id: string;
+    name: string;
+    company: string | null;
+    email: string | null;
+    phone: string | null;
+    address: string | null;
+  } | null;
+  invoice_items: InvoiceItem[];
+};
+
 type Filters = {
   q: string;
   status: string;
@@ -31,6 +70,15 @@ async function fetchUserId() {
     data: { user },
   } = await supabase.auth.getUser();
   return user?.id;
+}
+
+export async function generateInvoiceNumber(userId: string): Promise<string> {
+  const { count } = await supabase
+    .from("invoices")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId);
+  const next = (count ?? 0) + 1;
+  return `INV-${next.toString().padStart(4, "0")}`;
 }
 
 export function useInvoices(filters: Filters) {
@@ -62,6 +110,27 @@ export function useInvoices(filters: Filters) {
         pageCount: Math.ceil((count ?? 0) / PAGE_SIZE),
       };
     },
+  });
+}
+
+export function useInvoice(id: string) {
+  return useQuery({
+    queryKey: ["invoice", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("invoices")
+        .select("*, clients(*), invoice_items(*)")
+        .eq("id", id)
+        .single();
+      if (error) throw error;
+      return {
+        ...data,
+        invoice_items: ((data.invoice_items ?? []) as InvoiceItem[]).sort(
+          (a, b) => a.sort_order - b.sort_order,
+        ),
+      } as InvoiceDetail;
+    },
+    enabled: !!id,
   });
 }
 

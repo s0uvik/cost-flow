@@ -14,15 +14,17 @@ import type { InvoiceRow } from "../hooks/useInvoices";
 type Props = {
   invoice: InvoiceRow | null;
   onClose: () => void;
+  onDeleted?: () => void;
 };
 
-export function DeleteInvoiceDialog({ invoice, onClose }: Props) {
+export function DeleteInvoiceDialog({ invoice, onClose, onDeleted }: Props) {
   const deleteMutation = useDeleteInvoice();
 
   async function handleDelete() {
     if (!invoice) return;
     await deleteMutation.mutateAsync(invoice.id);
     onClose();
+    onDeleted?.();
   }
 
   return (

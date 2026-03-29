@@ -24,6 +24,26 @@ async function fetchUserId() {
 type Filters = { q: string; page: number };
 const PAGE_SIZE = 12;
 
+export function useAllClients() {
+  return useQuery({
+    queryKey: ["clients", "all"],
+    queryFn: async () => {
+      const userId = await fetchUserId();
+      if (!userId) return [];
+      const { data } = await supabase
+        .from("clients")
+        .select("id, name, company, email, phone, address")
+        .eq("user_id", userId)
+        .order("name");
+      return (data ?? []) as Pick<
+        ClientRow,
+        "id" | "name" | "company" | "email" | "phone" | "address"
+      >[];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
 export function useClients(filters: Filters) {
   return useQuery({
     queryKey: ["clients", filters],
