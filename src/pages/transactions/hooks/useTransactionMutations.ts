@@ -9,6 +9,8 @@ type TransactionPayload = {
   date: string
   category_id: string | null
   notes: string | null
+  payment_method: 'cash' | 'account'
+  payment_reference: string | null
 }
 
 async function fetchUserId() {

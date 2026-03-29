@@ -175,6 +175,8 @@ export type Database = {
           receipt_url: string | null
           notes: string | null
           tags: string[] | null
+          payment_method: 'cash' | 'account'
+          payment_reference: string | null
           created_at: string
           updated_at: string
         }
@@ -191,6 +193,8 @@ export type Database = {
           receipt_url?: string | null
           notes?: string | null
           tags?: string[] | null
+          payment_method?: 'cash' | 'account'
+          payment_reference?: string | null
         }
         Update: {
           type?: 'income' | 'expense'
@@ -203,6 +207,8 @@ export type Database = {
           receipt_url?: string | null
           notes?: string | null
           tags?: string[] | null
+          payment_method?: 'cash' | 'account'
+          payment_reference?: string | null
           updated_at?: string
         }
         Relationships: [

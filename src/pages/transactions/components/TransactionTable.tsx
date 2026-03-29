@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { Pencil, Trash2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Pencil, Trash2, ChevronLeft, ChevronRight, Banknote, CreditCard } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -48,6 +48,8 @@ export function TransactionTable({
               <TableHead>Name</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Type</TableHead>
+              <TableHead>Payment</TableHead>
+              <TableHead>Account Details</TableHead>
               <TableHead className="text-right">Amount</TableHead>
               <TableHead className="w-20" />
             </TableRow>
@@ -56,14 +58,14 @@ export function TransactionTable({
             {isLoading ? (
               Array.from({ length: 8 }).map((_, i) => (
                 <TableRow key={i}>
-                  {Array.from({ length: 6 }).map((_, j) => (
+                  {Array.from({ length: 8 }).map((_, j) => (
                     <TableCell key={j}><Skeleton className="h-4 w-full" /></TableCell>
                   ))}
                 </TableRow>
               ))
             ) : data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-10 text-muted-foreground">
+                <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
                   No transactions found
                 </TableCell>
               </TableRow>
@@ -95,6 +97,24 @@ export function TransactionTable({
                       <Badge variant={isIncome ? 'default' : 'destructive'} className="capitalize">
                         {tx.type}
                       </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {tx.payment_method === 'account' ? (
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600">
+                          <CreditCard className="h-3.5 w-3.5" />
+                          Account
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                          <Banknote className="h-3.5 w-3.5" />
+                          Cash
+                        </span>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {tx.payment_reference
+                        ? <span className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">{tx.payment_reference}</span>
+                        : <span>—</span>}
                     </TableCell>
                     <TableCell className={`text-right font-semibold ${isIncome ? 'text-green-600' : 'text-red-600'}`}>
                       {isIncome ? '+' : '-'}{formatINR(tx.amount)}

@@ -1,16 +1,16 @@
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { format } from 'date-fns'
-import { Loader2 } from 'lucide-react'
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { format } from "date-fns";
+import { Loader2, Banknote, CreditCard } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -18,55 +18,63 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useCategories } from '../hooks/useTransactions'
-import { useCreateTransaction, useUpdateTransaction } from '../hooks/useTransactionMutations'
-import type { TransactionRow } from '../hooks/useTransactions'
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useCategories } from "../hooks/useTransactions";
+import {
+  useCreateTransaction,
+  useUpdateTransaction,
+} from "../hooks/useTransactionMutations";
+import type { TransactionRow } from "../hooks/useTransactions";
 
 const schema = z.object({
-  type: z.enum(['income', 'expense']),
-  amount: z.coerce.number().positive('Amount must be positive'),
-  description: z.string().min(1, 'Name is required'),
-  date: z.string().min(1, 'Date is required'),
+  type: z.enum(["income", "expense"]),
+  amount: z.coerce.number().positive("Amount must be positive"),
+  description: z.string().min(1, "Name is required"),
+  date: z.string().min(1, "Date is required"),
   category_id: z.string().nullable(),
   notes: z.string().nullable(),
-})
+  payment_method: z.enum(["cash", "account"]),
+  payment_reference: z.string().nullable(),
+});
 
-type FormValues = z.infer<typeof schema>
+type FormValues = z.infer<typeof schema>;
 
 type Props = {
-  open: boolean
-  editing: TransactionRow | null
-  onClose: () => void
-}
+  open: boolean;
+  editing: TransactionRow | null;
+  onClose: () => void;
+};
 
 export function TransactionDialog({ open, editing, onClose }: Props) {
-  const { data: categories } = useCategories()
-  const createMutation = useCreateTransaction()
-  const updateMutation = useUpdateTransaction()
+  const { data: categories } = useCategories();
+  const createMutation = useCreateTransaction();
+  const updateMutation = useUpdateTransaction();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      type: 'expense',
+      type: "expense",
       amount: 0,
-      description: '',
-      date: format(new Date(), 'yyyy-MM-dd'),
+      description: "",
+      date: format(new Date(), "yyyy-MM-dd"),
       category_id: null,
       notes: null,
+      payment_method: "cash",
+      payment_reference: null,
     },
-  })
+  });
 
-  const selectedType = form.watch('type')
+  const selectedType = form.watch("type");
+  const selectedPaymentMethod = form.watch("payment_method");
 
   useEffect(() => {
     if (editing) {
@@ -77,44 +85,54 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
         date: editing.date,
         category_id: editing.category_id,
         notes: editing.notes,
-      })
+        payment_method: editing.payment_method ?? "cash",
+        payment_reference: editing.payment_reference,
+      });
     } else {
       form.reset({
-        type: 'expense',
+        type: "expense",
         amount: 0,
-        description: '',
-        date: format(new Date(), 'yyyy-MM-dd'),
+        description: "",
+        date: format(new Date(), "yyyy-MM-dd"),
         category_id: null,
         notes: null,
-      })
+        payment_method: "cash",
+        payment_reference: null,
+      });
     }
-  }, [editing, open])
+  }, [editing, open]);
 
   const filteredCategories = categories?.filter(
-    (c) => !selectedType || c.type === selectedType
-  )
+    (c) => !selectedType || c.type === selectedType,
+  );
 
   async function onSubmit(values: FormValues) {
     const payload = {
       ...values,
       category_id: values.category_id || null,
       notes: values.notes || null,
-    }
+      payment_reference:
+        values.payment_method === "account"
+          ? values.payment_reference || null
+          : null,
+    };
     if (editing) {
-      await updateMutation.mutateAsync({ id: editing.id, ...payload })
+      await updateMutation.mutateAsync({ id: editing.id, ...payload });
     } else {
-      await createMutation.mutateAsync(payload)
+      await createMutation.mutateAsync(payload);
     }
-    onClose()
+    onClose();
   }
 
-  const isPending = createMutation.isPending || updateMutation.isPending
+  const isPending = createMutation.isPending || updateMutation.isPending;
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{editing ? 'Edit Transaction' : 'New Transaction'}</DialogTitle>
+          <DialogTitle>
+            {editing ? "Edit Transaction" : "New Transaction"}
+          </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -127,20 +145,20 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
                 <FormItem>
                   <FormLabel>Type</FormLabel>
                   <div className="flex gap-2">
-                    {(['income', 'expense'] as const).map((t) => (
+                    {(["income", "expense"] as const).map((t) => (
                       <button
                         key={t}
                         type="button"
                         onClick={() => {
-                          field.onChange(t)
-                          form.setValue('category_id', null)
+                          field.onChange(t);
+                          form.setValue("category_id", null);
                         }}
                         className={`flex-1 rounded-md border py-2 text-sm font-medium capitalize transition-colors ${
                           field.value === t
-                            ? t === 'income'
-                              ? 'border-green-500 bg-green-50 text-green-700'
-                              : 'border-red-500 bg-red-50 text-red-700'
-                            : 'border-input hover:bg-muted'
+                            ? t === "income"
+                              ? "border-green-500 bg-green-50 text-green-700"
+                              : "border-red-500 bg-red-50 text-red-700"
+                            : "border-input hover:bg-muted"
                         }`}
                       >
                         {t}
@@ -160,7 +178,13 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
                 <FormItem>
                   <FormLabel>Amount (₹)</FormLabel>
                   <FormControl>
-                    <Input type="number" min="0" step="0.01" placeholder="0.00" {...field} />
+                    <Input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -205,8 +229,10 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
                 <FormItem>
                   <FormLabel>Category</FormLabel>
                   <Select
-                    value={field.value ?? 'none'}
-                    onValueChange={(v) => field.onChange(v === 'none' ? null : v)}
+                    value={field.value ?? "none"}
+                    onValueChange={(v) =>
+                      field.onChange(v === "none" ? null : v)
+                    }
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -218,7 +244,10 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
                       {filteredCategories?.map((cat) => (
                         <SelectItem key={cat.id} value={cat.id}>
                           <span className="flex items-center gap-2">
-                            <span className="size-2 rounded-full inline-block" style={{ backgroundColor: cat.color }} />
+                            <span
+                              className="size-2 rounded-full inline-block"
+                              style={{ backgroundColor: cat.color }}
+                            />
                             {cat.name}
                           </span>
                         </SelectItem>
@@ -230,15 +259,83 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
               )}
             />
 
+            {/* Payment Method */}
+            <FormField
+              control={form.control}
+              name="payment_method"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Payment Method</FormLabel>
+                  <div className="flex gap-2">
+                    {(["cash", "account"] as const).map((m) => (
+                      <button
+                        key={m}
+                        type="button"
+                        onClick={() => {
+                          field.onChange(m);
+                          if (m === "cash")
+                            form.setValue("payment_reference", null);
+                        }}
+                        className={`flex flex-1 items-center justify-center gap-2 rounded-md border py-2 text-sm font-medium transition-colors ${
+                          field.value === m
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-input hover:bg-muted"
+                        }`}
+                      >
+                        {m === "cash" ? (
+                          <Banknote className="h-4 w-4" />
+                        ) : (
+                          <CreditCard className="h-4 w-4" />
+                        )}
+                        {m === "cash" ? "Cash" : "Account"}
+                      </button>
+                    ))}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Account / Transaction Reference — shown only when payment_method = account */}
+            {selectedPaymentMethod === "account" && (
+              <FormField
+                control={form.control}
+                name="payment_reference"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Account No. / Transaction ID{" "}
+                      <span className="text-muted-foreground">(optional)</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g. XXXX1234 or UPI ref no."
+                        {...field}
+                        value={field.value ?? ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             {/* Notes */}
             <FormField
               control={form.control}
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Notes <span className="text-muted-foreground">(optional)</span></FormLabel>
+                  <FormLabel>
+                    Notes{" "}
+                    <span className="text-muted-foreground">(optional)</span>
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Any additional notes..." {...field} value={field.value ?? ''} />
+                    <Input
+                      placeholder="Any additional notes..."
+                      {...field}
+                      value={field.value ?? ""}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -246,15 +343,17 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
             />
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+              <Button type="button" variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
               <Button type="submit" disabled={isPending}>
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {editing ? 'Save Changes' : 'Add Transaction'}
+                {editing ? "Save Changes" : "Add Transaction"}
               </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

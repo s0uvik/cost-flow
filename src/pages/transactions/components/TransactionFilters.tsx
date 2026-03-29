@@ -14,6 +14,7 @@ type Filters = {
   q: string
   type: string
   categoryId: string
+  paymentMethod: string
   from: string
   to: string
 }
@@ -28,7 +29,7 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
   const { data: categories } = useCategories()
 
   const hasActiveFilters =
-    filters.q || filters.type || filters.categoryId || filters.from || filters.to
+    filters.q || filters.type || filters.categoryId || filters.paymentMethod || filters.from || filters.to
 
   return (
     <div className="flex flex-wrap gap-2 items-center">
@@ -67,6 +68,17 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
               </span>
             </SelectItem>
           ))}
+        </SelectContent>
+      </Select>
+
+      <Select value={filters.paymentMethod || 'all'} onValueChange={(v) => onChange({ paymentMethod: v === 'all' ? '' : v })}>
+        <SelectTrigger className="w-36">
+          <SelectValue placeholder="All payments" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All payments</SelectItem>
+          <SelectItem value="cash">Cash</SelectItem>
+          <SelectItem value="account">Account</SelectItem>
         </SelectContent>
       </Select>
 

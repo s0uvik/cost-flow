@@ -10,12 +10,15 @@ export type TransactionRow = {
   notes: string | null
   category_id: string | null
   categories: { name: string; color: string } | null
+  payment_method: 'cash' | 'account'
+  payment_reference: string | null
 }
 
 type Filters = {
   q?: string
   type?: 'income' | 'expense' | ''
   categoryId?: string
+  paymentMethod?: 'cash' | 'account' | ''
   from?: string
   to?: string
   page: number
@@ -37,7 +40,7 @@ export function useTransactions(filters: Filters) {
 
       let query = supabase
         .from('transactions')
-        .select('id, type, amount, description, date, notes, category_id, categories(name, color)', { count: 'exact' })
+        .select('id, type, amount, description, date, notes, category_id, payment_method, payment_reference, categories(name, color)', { count: 'exact' })
         .eq('user_id', userId)
         .order('date', { ascending: false })
         .order('created_at', { ascending: false })
@@ -46,6 +49,7 @@ export function useTransactions(filters: Filters) {
       if (filters.q) query = query.ilike('description', `%${filters.q}%`)
       if (filters.type) query = query.eq('type', filters.type)
       if (filters.categoryId) query = query.eq('category_id', filters.categoryId)
+      if (filters.paymentMethod) query = query.eq('payment_method', filters.paymentMethod)
       if (filters.from) query = query.gte('date', filters.from)
       if (filters.to) query = query.lte('date', filters.to)
 
