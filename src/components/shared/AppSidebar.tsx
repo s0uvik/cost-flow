@@ -23,6 +23,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useProfile } from '@/pages/settings/hooks/useProfile'
 import { UserMenu } from './UserMenu'
 
 const navItems = [
@@ -43,6 +45,12 @@ const reportItems = [
 ]
 
 export function AppSidebar() {
+  const { data: profile } = useProfile()
+
+  const logoUrl      = profile?.logo_url ?? undefined
+  const businessName = profile?.business_name || ''
+  const initials     = businessName.slice(0, 2).toUpperCase() || 'ET'
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -50,12 +58,17 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link to="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <TrendingUp className="size-4" />
-                </div>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">ExpenseTracker</span>
-                  <span className="text-xs text-muted-foreground">Business Finance</span>
+                <Avatar className="size-8 shrink-0 rounded-lg">
+                  <AvatarImage src={logoUrl} alt={businessName} className="object-contain p-0.5" />
+                  <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                    {businessName ? initials : <TrendingUp className="size-4" />}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex min-w-0 flex-col gap-0.5 leading-none">
+                  <span className="truncate font-semibold">
+                    {businessName || 'ExpenseTracker'}
+                  </span>
+                  <span className="truncate text-xs text-muted-foreground">Business Finance</span>
                 </div>
               </Link>
             </SidebarMenuButton>
