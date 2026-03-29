@@ -1,7 +1,11 @@
 import { useRef, useState } from 'react'
 import { ImagePlus, Loader2, Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useUploadLogo, useUpdateProfile } from '../hooks/useProfile'
+
+const ALLOWED_TYPES = ['image/png', 'image/jpeg']
+const MAX_SIZE = 500 * 1024 // 500KB
 
 type Props = {
   currentUrl: string | null
@@ -17,6 +21,14 @@ export function LogoUpload({ currentUrl, businessName }: Props) {
   const displayUrl = preview ?? currentUrl
 
   async function handleFile(file: File) {
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast.error('Only PNG, JPG, and JPEG files are allowed')
+      return
+    }
+    if (file.size > MAX_SIZE) {
+      toast.error('File size must be 500KB or less')
+      return
+    }
     setPreview(URL.createObjectURL(file))
     const publicUrl = await uploadMutation.mutateAsync(file)
     await updateProfile.mutateAsync({ logo_url: publicUrl })
@@ -48,7 +60,7 @@ export function LogoUpload({ currentUrl, businessName }: Props) {
 
       <div className="space-y-2">
         <p className="text-sm font-medium">Business Logo</p>
-        <p className="text-xs text-muted-foreground">PNG, JPG up to 2MB. Appears on invoices.</p>
+        <p className="text-xs text-muted-foreground">PNG, JPG, JPEG up to 500KB. Appears on invoices.</p>
         <div className="flex gap-2">
           <Button
             type="button"
@@ -78,7 +90,7 @@ export function LogoUpload({ currentUrl, businessName }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept=".png,.jpg,.jpeg"
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0]
