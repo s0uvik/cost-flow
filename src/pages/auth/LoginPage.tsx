@@ -105,14 +105,22 @@ export function LoginPage() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="justify-center px-6 text-center text-sm">
-        Don't have an account?&nbsp;
+      <CardFooter className="flex flex-col gap-3 px-6 text-center text-sm">
         <Link
-          to="/register"
-          className="underline underline-offset-4 hover:text-primary"
+          to="/forgot-password"
+          className="text-muted-foreground hover:text-primary"
         >
-          Sign up
+          Forgot your password?
         </Link>
+        <div>
+          Don't have an account?&nbsp;
+          <Link
+            to="/register"
+            className="underline underline-offset-4 hover:text-primary"
+          >
+            Sign up
+          </Link>
+        </div>
       </CardFooter>
     </Card>
   );
