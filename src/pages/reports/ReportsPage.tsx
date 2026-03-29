@@ -7,6 +7,7 @@ import { IncomeExpenseChart } from './components/IncomeExpenseChart'
 import { CategoryBreakdown } from './components/CategoryBreakdown'
 import { TopVendors } from './components/TopVendors'
 import { TopClients } from './components/TopClients'
+import { ExportButton } from './components/ExportButton'
 import { useReportsData, type DatePreset } from './hooks/useReportsData'
 
 const DATE_PRESETS: DatePreset[] = ['this_month', 'last_month', 'this_quarter', 'last_quarter', 'this_year', 'last_year', 'custom']
@@ -28,14 +29,22 @@ export function ReportsPage() {
         description="Analyse your income, expenses, and business performance"
       />
 
-      <ReportDateRange
-        preset={preset}
-        customFrom={customFrom}
-        customTo={customTo}
-        onPreset={setPreset}
-        onFrom={setCustomFrom}
-        onTo={setCustomTo}
-      />
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <ReportDateRange
+          preset={preset}
+          customFrom={customFrom}
+          customTo={customTo}
+          onPreset={setPreset}
+          onFrom={setCustomFrom}
+          onTo={setCustomTo}
+        />
+        {data && (
+          <ExportButton
+            range={data.range}
+            rawTransactions={data.rawTransactions}
+          />
+        )}
+      </div>
 
       <ReportSummaryCards summary={data?.summary} isLoading={isLoading} />
 

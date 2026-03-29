@@ -43,7 +43,7 @@ export function useReportsData(preset: DatePreset, customFrom?: string, customTo
       const [txRes, invRes] = await Promise.all([
         supabase
           .from('transactions')
-          .select('id, type, amount, description, date, category_id, vendor_id, client_id, categories(name, color), vendors(name), clients(name)')
+          .select('id, type, amount, description, date, created_at, payment_method, payment_reference, category_id, vendor_id, client_id, categories(name, color), vendors(name), clients(name)')
           .eq('user_id', userId)
           .gte('date', fromStr)
           .lte('date', toStr)
