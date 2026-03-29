@@ -36,7 +36,7 @@ export function RequestAccessPage() {
               <div className="space-y-1">
                 <p className="text-sm font-medium">Email</p>
                 <a
-                  href="mailto:saidul@example.com"
+                  href="mailto:tonyr4311@gmail.com"
                   className="text-sm text-primary hover:underline"
                 >
                   tonyr4311@gmail.com
@@ -72,7 +72,7 @@ export function RequestAccessPage() {
       </CardContent>
       <CardFooter className="flex flex-col gap-3 px-6 py-4">
         <Button asChild className="w-full">
-          <a href="mailto:saidul@example.com">Send us an Email</a>
+          <a href="mailto:tonyr4311@gmail.com">Send us an Email</a>
         </Button>
         <div className="text-center text-sm">
           Already have an account?&nbsp;
