@@ -108,7 +108,7 @@ export function PwaInstallPrompt() {
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="font-semibold">Install Expense Tracker</p>
+            <p className="font-semibold">Install Cost Flow</p>
             {showIosHint ? (
               <p className="mt-1 text-sm text-muted-foreground">
                 On iPhone or iPad, tap <Share2 className="mx-1 inline h-3.5 w-3.5 align-[-2px]" />

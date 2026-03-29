@@ -19,7 +19,7 @@ const routeTitles: Record<string, string> = {
 export function AppHeader() {
   const location = useRouterState({ select: (s) => s.location });
   const pathname = location.pathname;
-  const title = routeTitles[pathname] ?? "Expense Tracker";
+  const title = routeTitles[pathname] ?? "Cost Flow";
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-2 border-b px-3 sm:px-4">

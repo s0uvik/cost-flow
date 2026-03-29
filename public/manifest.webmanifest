@@ -1,6 +1,6 @@
 {
-  "name": "Expense Tracker",
-  "short_name": "Expense",
+  "name": "Cost Flow",
+  "short_name": "CostFlow",
   "description": "Track expenses, budgets, invoices, clients, and vendors from one installable app.",
   "start_url": "/",
   "scope": "/",

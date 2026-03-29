@@ -74,7 +74,7 @@ export function AppSidebar() {
                 </Avatar>
                 <div className="flex min-w-0 flex-col gap-0.5 leading-none">
                   <span className="truncate font-semibold">
-                    {businessName || "ExpenseTracker"}
+                    {businessName || "Cost Flow"}
                   </span>
                   <span className="truncate text-xs text-muted-foreground">
                     Business Finance

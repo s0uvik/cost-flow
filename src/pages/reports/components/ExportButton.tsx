@@ -37,7 +37,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
     setLoading(true);
     try {
       const wb = new ExcelJS.Workbook();
-      wb.creator = "ExpenseTracker";
+      wb.creator = "CostFlow";
       wb.created = new Date();
 
       const ws = wb.addWorksheet("Transactions");
