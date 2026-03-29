@@ -109,6 +109,7 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
   async function onSubmit(values: FormValues) {
     const payload = {
       ...values,
+      description: values.description.toUpperCase(),
       category_id: values.category_id || null,
       notes: values.notes || null,
       payment_reference:
@@ -351,7 +352,11 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
               >
                 Cancel
               </Button>
-              <Button type="submit" className="w-full sm:w-auto" disabled={isPending}>
+              <Button
+                type="submit"
+                className="w-full sm:w-auto"
+                disabled={isPending}
+              >
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {editing ? "Save Changes" : "Add Transaction"}
               </Button>

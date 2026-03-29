@@ -22,6 +22,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useProfile } from "@/pages/settings/hooks/useProfile";
@@ -44,6 +45,7 @@ const reportItems = [{ title: "Reports", to: "/reports", icon: BarChart2 }];
 
 export function AppSidebar() {
   const { data: profile } = useProfile();
+  const { setOpenMobile } = useSidebar();
 
   const logoUrl = profile?.logo_url ?? undefined;
   const businessName = profile?.business_name || "";
@@ -98,6 +100,7 @@ export function AppSidebar() {
                         className:
                           "bg-sidebar-accent text-sidebar-accent-foreground",
                       }}
+                      onClick={() => setOpenMobile(false)}
                     >
                       <item.icon />
                       <span>{item.title}</span>
@@ -122,6 +125,7 @@ export function AppSidebar() {
                         className:
                           "bg-sidebar-accent text-sidebar-accent-foreground",
                       }}
+                      onClick={() => setOpenMobile(false)}
                     >
                       <item.icon />
                       <span>{item.title}</span>
@@ -146,6 +150,7 @@ export function AppSidebar() {
                         className:
                           "bg-sidebar-accent text-sidebar-accent-foreground",
                       }}
+                      onClick={() => setOpenMobile(false)}
                     >
                       <item.icon />
                       <span>{item.title}</span>
@@ -167,6 +172,7 @@ export function AppSidebar() {
                 activeProps={{
                   className: "bg-sidebar-accent text-sidebar-accent-foreground",
                 }}
+                onClick={() => setOpenMobile(false)}
               >
                 <Settings />
                 <span>Settings</span>
