@@ -43,7 +43,7 @@ export function ReportsPage() {
         description="Analyse your income, expenses, and business performance"
       />
 
-      <div className="flex flex-wrap items-end justify-between gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <ReportDateRange
           preset={preset}
           customFrom={customFrom}
@@ -53,10 +53,12 @@ export function ReportsPage() {
           onTo={setCustomTo}
         />
         {data && (
-          <ExportButton
-            range={data.range}
-            rawTransactions={data.rawTransactions}
-          />
+          <div className="w-full sm:w-auto">
+            <ExportButton
+              range={data.range}
+              rawTransactions={data.rawTransactions}
+            />
+          </div>
         )}
       </div>
 

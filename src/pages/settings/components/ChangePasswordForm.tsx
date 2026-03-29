@@ -96,7 +96,11 @@ export function ChangePasswordForm() {
               )}
             />
 
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button
+              type="submit"
+              className="w-full sm:w-auto"
+              disabled={mutation.isPending}
+            >
               {mutation.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}

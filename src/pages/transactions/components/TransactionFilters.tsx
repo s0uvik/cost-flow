@@ -37,12 +37,12 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
     filters.to;
 
   return (
-    <div className="flex flex-wrap gap-2 items-center">
-      <div className="relative">
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+      <div className="relative w-full sm:w-auto">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search transactions..."
-          className="pl-8 w-56"
+          className="w-full pl-8 sm:w-56"
           value={filters.q}
           onChange={(e) => onChange({ q: e.target.value })}
         />
@@ -52,7 +52,7 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         value={filters.type || "all"}
         onValueChange={(v) => onChange({ type: v === "all" ? "" : v })}
       >
-        <SelectTrigger className="w-36">
+        <SelectTrigger className="w-full sm:w-36">
           <SelectValue placeholder="All types" />
         </SelectTrigger>
         <SelectContent>
@@ -66,7 +66,7 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         value={filters.categoryId || "all"}
         onValueChange={(v) => onChange({ categoryId: v === "all" ? "" : v })}
       >
-        <SelectTrigger className="w-40">
+        <SelectTrigger className="w-full sm:w-40">
           <SelectValue placeholder="All categories" />
         </SelectTrigger>
         <SelectContent>
@@ -89,7 +89,7 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         value={filters.paymentMethod || "all"}
         onValueChange={(v) => onChange({ paymentMethod: v === "all" ? "" : v })}
       >
-        <SelectTrigger className="w-36">
+        <SelectTrigger className="w-full sm:w-36">
           <SelectValue placeholder="All payments" />
         </SelectTrigger>
         <SelectContent>
@@ -101,20 +101,25 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
 
       <Input
         type="date"
-        className="w-36"
+        className="w-full sm:w-36"
         value={filters.from}
         onChange={(e) => onChange({ from: e.target.value })}
       />
-      <span className="text-muted-foreground text-sm">to</span>
+      <span className="text-sm text-muted-foreground sm:inline">to</span>
       <Input
         type="date"
-        className="w-36"
+        className="w-full sm:w-36"
         value={filters.to}
         onChange={(e) => onChange({ to: e.target.value })}
       />
 
       {hasActiveFilters && (
-        <Button variant="ghost" size="sm" onClick={onReset} className="gap-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onReset}
+          className="w-full gap-1 sm:w-auto"
+        >
           <X className="h-3.5 w-3.5" />
           Clear
         </Button>

@@ -67,7 +67,7 @@ export function TransactionTable({
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
-        <Table>
+        <Table className="min-w-[900px]">
           <TableHeader>
             <TableRow>
               <TableHead>Date</TableHead>
@@ -211,7 +211,7 @@ export function TransactionTable({
 
       {/* Pagination */}
       {pageCount > 1 && (
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <span>
             {count} transaction{count !== 1 ? "s" : ""}
           </span>

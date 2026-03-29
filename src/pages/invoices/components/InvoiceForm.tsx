@@ -191,7 +191,7 @@ export function InvoiceForm({
             <CardTitle className="text-base">Invoice Details</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="invoice_number"
@@ -263,7 +263,7 @@ export function InvoiceForm({
               )}
             />
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="issue_date"
@@ -300,89 +300,92 @@ export function InvoiceForm({
             <CardTitle className="text-base">Line Items</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {/* Header */}
-            <div className="grid grid-cols-[1fr_80px_120px_100px_36px] gap-2 text-xs font-medium text-muted-foreground px-1">
-              <span>Description</span>
-              <span className="text-center">Qty</span>
-              <span className="text-right">Unit Price</span>
-              <span className="text-right">Amount</span>
-              <span />
-            </div>
-
-            {fields.map((field, index) => (
-              <div
-                key={field.id}
-                className="grid grid-cols-[1fr_80px_120px_100px_36px] gap-2 items-start"
-              >
-                <FormField
-                  control={form.control}
-                  name={`items.${index}.description`}
-                  render={({ field: f }) => (
-                    <FormItem className="space-y-0">
-                      <FormControl>
-                        <Input placeholder="Item description" {...f} />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`items.${index}.quantity`}
-                  render={({ field: f }) => (
-                    <FormItem className="space-y-0">
-                      <FormControl>
-                        <Input
-                          type="number"
-                          min="0"
-                          step="1"
-                          className="text-center"
-                          {...f}
-                          onChange={(e) => {
-                            f.onChange(e);
-                            updateItemAmount(index);
-                          }}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`items.${index}.unit_price`}
-                  render={({ field: f }) => (
-                    <FormItem className="space-y-0">
-                      <FormControl>
-                        <Input
-                          type="number"
-                          min="0"
-                          step="0.01"
-                          className="text-right"
-                          {...f}
-                          onChange={(e) => {
-                            f.onChange(e);
-                            updateItemAmount(index);
-                          }}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <div className="flex items-center justify-end h-9 text-sm font-medium">
-                  {formatINR(watchedItems?.[index]?.amount ?? 0)}
+            <div className="overflow-x-auto pb-1">
+              <div className="min-w-[640px] space-y-3">
+                <div className="grid grid-cols-[1fr_80px_120px_100px_36px] gap-2 px-1 text-xs font-medium text-muted-foreground">
+                  <span>Description</span>
+                  <span className="text-center">Qty</span>
+                  <span className="text-right">Unit Price</span>
+                  <span className="text-right">Amount</span>
+                  <span />
                 </div>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 text-muted-foreground hover:text-destructive"
-                  disabled={fields.length === 1}
-                  onClick={() => remove(index)}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
+
+                {fields.map((field, index) => (
+                  <div
+                    key={field.id}
+                    className="grid grid-cols-[1fr_80px_120px_100px_36px] items-start gap-2"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={`items.${index}.description`}
+                      render={({ field: f }) => (
+                        <FormItem className="space-y-0">
+                          <FormControl>
+                            <Input placeholder="Item description" {...f} />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`items.${index}.quantity`}
+                      render={({ field: f }) => (
+                        <FormItem className="space-y-0">
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min="0"
+                              step="1"
+                              className="text-center"
+                              {...f}
+                              onChange={(e) => {
+                                f.onChange(e);
+                                updateItemAmount(index);
+                              }}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`items.${index}.unit_price`}
+                      render={({ field: f }) => (
+                        <FormItem className="space-y-0">
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              className="text-right"
+                              {...f}
+                              onChange={(e) => {
+                                f.onChange(e);
+                                updateItemAmount(index);
+                              }}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <div className="flex h-9 items-center justify-end text-sm font-medium">
+                      {formatINR(watchedItems?.[index]?.amount ?? 0)}
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-9 w-9 text-muted-foreground hover:text-destructive"
+                      disabled={fields.length === 1}
+                      onClick={() => remove(index)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
 
             <Button
               type="button"
@@ -404,13 +407,13 @@ export function InvoiceForm({
             <Separator className="my-4" />
 
             {/* Totals */}
-            <div className="space-y-2 ml-auto w-72">
+            <div className="ml-auto w-full space-y-2 sm:w-72">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span className="font-medium">{formatINR(subtotal)}</span>
               </div>
-              <div className="flex items-center justify-between gap-2 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
                   <span>Tax</span>
                   <FormField
                     control={form.control}
@@ -434,10 +437,10 @@ export function InvoiceForm({
                     )}
                   />
                 </div>
-                <span className="font-medium">{formatINR(taxAmount)}</span>
+                <span className="font-medium sm:text-right">{formatINR(taxAmount)}</span>
               </div>
-              <div className="flex items-center justify-between gap-2 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
                   <span>Discount</span>
                   <FormField
                     control={form.control}
@@ -457,7 +460,7 @@ export function InvoiceForm({
                     )}
                   />
                 </div>
-                <span className="font-medium text-red-600">
+                <span className="font-medium text-red-600 sm:text-right">
                   -{formatINR(discountAmount || 0)}
                 </span>
               </div>
@@ -477,7 +480,7 @@ export function InvoiceForm({
           <CardHeader>
             <CardTitle className="text-base">Notes & Terms</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4">
+          <CardContent className="grid gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
               name="notes"
@@ -516,11 +519,16 @@ export function InvoiceForm({
         </Card>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3">
-          <Button type="button" variant="outline" onClick={onCancel}>
+        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full sm:w-auto"
+            onClick={onCancel}
+          >
             Cancel
           </Button>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" className="w-full sm:w-auto" disabled={isPending}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {editing ? "Save Changes" : "Create Invoice"}
           </Button>

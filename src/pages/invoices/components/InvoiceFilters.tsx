@@ -34,7 +34,7 @@ export function InvoiceFilters({
   return (
     <div className="space-y-3">
       <Tabs value={status || ""} onValueChange={onStatus}>
-        <TabsList className="h-9">
+        <TabsList className="h-auto w-full justify-start">
           {STATUS_TABS.map((tab) => {
             const count =
               tab.value === ""
@@ -58,18 +58,23 @@ export function InvoiceFilters({
         </TabsList>
       </Tabs>
 
-      <div className="flex items-center gap-2">
-        <div className="relative">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative w-full sm:w-auto">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search invoice number..."
-            className="pl-8 w-56"
+            className="w-full pl-8 sm:w-56"
             value={q}
             onChange={(e) => onSearch(e.target.value)}
           />
         </div>
         {(q || status) && (
-          <Button variant="ghost" size="sm" onClick={onReset} className="gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onReset}
+            className="w-full gap-1 sm:w-auto"
+          >
             <X className="h-3.5 w-3.5" />
             Clear
           </Button>

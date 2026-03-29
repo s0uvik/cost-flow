@@ -78,7 +78,7 @@ export function VendorCard({ vendor, onEdit, onDelete }: Props) {
           </div>
         </div>
         <div
-          className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+          className="flex shrink-0 items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100"
           onClick={(e) => e.stopPropagation()}
         >
           <Button
@@ -122,7 +122,7 @@ export function VendorCard({ vendor, onEdit, onDelete }: Props) {
       </div>
 
       {/* Stats */}
-      <div className="flex items-center justify-between pt-1 border-t">
+      <div className="flex flex-col gap-2 border-t pt-1 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
           <Receipt className="h-3.5 w-3.5" />
           <span>

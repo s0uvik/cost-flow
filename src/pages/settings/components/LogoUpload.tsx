@@ -43,7 +43,7 @@ export function LogoUpload({ currentUrl, businessName }: Props) {
   const isPending = uploadMutation.isPending || updateProfile.isPending;
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
       <div className="size-20 rounded-xl border-2 border-dashed border-muted-foreground/25 flex items-center justify-center overflow-hidden bg-muted/30">
         {isPending ? (
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -67,7 +67,7 @@ export function LogoUpload({ currentUrl, businessName }: Props) {
         <p className="text-xs text-muted-foreground">
           PNG, JPG, JPEG up to 500KB. Appears on invoices.
         </p>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             type="button"
             variant="outline"

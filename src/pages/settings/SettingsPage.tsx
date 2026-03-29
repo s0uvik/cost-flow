@@ -26,10 +26,16 @@ export function SettingsPage() {
         onValueChange={(v) => setTab(v as Tab)}
         className="space-y-6"
       >
-        <TabsList>
-          <TabsTrigger value="profile">Business Profile</TabsTrigger>
-          <TabsTrigger value="tax">Tax & Currency</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
+        <TabsList className="w-full justify-start">
+          <TabsTrigger value="profile" className="flex-1 sm:flex-none">
+            Business Profile
+          </TabsTrigger>
+          <TabsTrigger value="tax" className="flex-1 sm:flex-none">
+            Tax & Currency
+          </TabsTrigger>
+          <TabsTrigger value="security" className="flex-1 sm:flex-none">
+            Security
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-0">

@@ -56,7 +56,7 @@ export function VendorListPage() {
         }
       />
 
-      <div className="flex items-center justify-between flex-wrap gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <VendorFilters
           q={q}
           categoryId={categoryId}
@@ -71,7 +71,7 @@ export function VendorListPage() {
           onReset={handleReset}
         />
         {!isLoading && (data?.count ?? 0) > 0 && (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground sm:text-right">
             {data?.count} vendor{data?.count !== 1 ? "s" : ""}
           </p>
         )}
@@ -121,7 +121,7 @@ export function VendorListPage() {
           </div>
 
           {(data?.pageCount ?? 0) > 1 && (
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-2 text-center sm:flex-row">
               <Button
                 variant="outline"
                 size="icon"

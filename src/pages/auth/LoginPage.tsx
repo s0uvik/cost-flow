@@ -105,7 +105,7 @@ export function LoginPage() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="text-sm text-center justify-center">
+      <CardFooter className="justify-center px-6 text-center text-sm">
         Don't have an account?&nbsp;
         <Link
           to="/register"

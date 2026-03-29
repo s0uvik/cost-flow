@@ -29,12 +29,12 @@ export function VendorFilters({
   const hasFilter = q || categoryId;
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <div className="relative">
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+      <div className="relative w-full sm:w-auto">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search vendors..."
-          className="pl-8 w-56"
+          className="w-full pl-8 sm:w-56"
           value={q}
           onChange={(e) => onSearch(e.target.value)}
         />
@@ -44,7 +44,7 @@ export function VendorFilters({
         value={categoryId || "all"}
         onValueChange={(v) => onCategory(v === "all" ? "" : v)}
       >
-        <SelectTrigger className="w-44">
+        <SelectTrigger className="w-full sm:w-44">
           <SelectValue placeholder="All categories" />
         </SelectTrigger>
         <SelectContent>
@@ -64,7 +64,12 @@ export function VendorFilters({
       </Select>
 
       {hasFilter && (
-        <Button variant="ghost" size="sm" onClick={onReset} className="gap-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onReset}
+          className="w-full gap-1 sm:w-auto"
+        >
           <X className="h-3.5 w-3.5" />
           Clear
         </Button>

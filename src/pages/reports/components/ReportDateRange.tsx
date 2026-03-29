@@ -32,7 +32,7 @@ export function ReportDateRange({
   onTo,
 }: Props) {
   return (
-    <div className="flex flex-wrap items-end gap-3">
+    <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
       <div className="flex items-center gap-1.5">
         <CalendarDays className="h-4 w-4 text-muted-foreground" />
         <span className="text-sm font-medium">Period:</span>
@@ -52,12 +52,12 @@ export function ReportDateRange({
       </div>
 
       {preset === "custom" && (
-        <div className="flex items-end gap-2">
+        <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2">
           <div className="space-y-1">
             <Label className="text-xs">From</Label>
             <Input
               type="date"
-              className="h-8 w-36 text-sm"
+              className="h-8 w-full text-sm sm:w-36"
               value={customFrom}
               onChange={(e) => onFrom(e.target.value)}
             />
@@ -66,7 +66,7 @@ export function ReportDateRange({
             <Label className="text-xs">To</Label>
             <Input
               type="date"
-              className="h-8 w-36 text-sm"
+              className="h-8 w-full text-sm sm:w-36"
               value={customTo}
               onChange={(e) => onTo(e.target.value)}
             />

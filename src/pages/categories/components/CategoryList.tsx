@@ -26,7 +26,7 @@ export function CategoryList({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           <div
             className={`size-2.5 rounded-full ${isIncome ? "bg-green-500" : "bg-red-500"}`}
@@ -39,7 +39,7 @@ export function CategoryList({
         <Button
           variant="ghost"
           size="sm"
-          className="gap-1.5 text-xs"
+          className="w-full gap-1.5 text-xs sm:w-auto"
           onClick={onAdd}
         >
           <Plus className="h-3.5 w-3.5" />

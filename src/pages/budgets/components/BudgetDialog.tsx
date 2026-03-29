@@ -199,7 +199,7 @@ export function BudgetDialog({ open, editing, onClose }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Period</FormLabel>
-                  <div className="flex gap-2">
+                  <div className="grid gap-2 sm:grid-cols-3">
                     {(["monthly", "quarterly", "yearly"] as const).map((p) => (
                       <button
                         key={p}
@@ -221,7 +221,7 @@ export function BudgetDialog({ open, editing, onClose }: Props) {
             />
 
             {/* Dates */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid gap-3 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="start_date"
@@ -259,10 +259,15 @@ export function BudgetDialog({ open, editing, onClose }: Props) {
             </div>
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full sm:w-auto"
+                onClick={onClose}
+              >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isPending}>
+              <Button type="submit" className="w-full sm:w-auto" disabled={isPending}>
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {editing ? "Save Changes" : "Create Budget"}
               </Button>

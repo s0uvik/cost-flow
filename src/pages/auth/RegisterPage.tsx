@@ -125,7 +125,7 @@ export function RegisterPage() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="text-sm text-center justify-center">
+      <CardFooter className="justify-center px-6 text-center text-sm">
         Already have an account?&nbsp;
         <Link
           to="/login"

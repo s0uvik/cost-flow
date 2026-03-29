@@ -78,7 +78,11 @@ export function InvoiceViewPage() {
         <PageHeader
           title={`Edit ${invoice.invoice_number}`}
           action={
-            <Button variant="outline" onClick={() => setIsEditing(false)}>
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto"
+              onClick={() => setIsEditing(false)}
+            >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Cancel Edit
             </Button>
@@ -105,22 +109,28 @@ export function InvoiceViewPage() {
         title={invoice.invoice_number}
         description={`Created ${format(parseISO(invoice.issue_date), "dd MMM yyyy")}`}
         action={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
             <Button
               variant="outline"
+              className="w-full sm:w-auto"
               onClick={() => navigate({ to: "/invoices" })}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
             {(invoice.status === "draft" || invoice.status === "sent") && (
-              <Button variant="outline" onClick={() => setIsEditing(true)}>
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto"
+                onClick={() => setIsEditing(true)}
+              >
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit
               </Button>
             )}
             <Button
               variant="outline"
+              className="w-full sm:w-auto"
               onClick={() =>
                 generateInvoicePdf(
                   invoice,
@@ -138,9 +148,9 @@ export function InvoiceViewPage() {
 
       {/* Main invoice card — print-friendly */}
       <Card className="print:shadow-none print:border-0">
-        <CardContent className="p-8 space-y-8">
+        <CardContent className="space-y-8 p-4 sm:p-8">
           {/* Header */}
-          <div className="flex items-start justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h1 className="text-2xl font-bold tracking-tight">INVOICE</h1>
               <p className="text-muted-foreground font-mono text-sm mt-1">
@@ -153,7 +163,7 @@ export function InvoiceViewPage() {
           <Separator />
 
           {/* Client + Dates */}
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-1">
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                 Bill To
@@ -215,8 +225,8 @@ export function InvoiceViewPage() {
           <Separator />
 
           {/* Line Items Table */}
-          <div>
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-sm">
               <thead>
                 <tr className="border-b">
                   <th className="text-left pb-3 font-semibold text-muted-foreground">
@@ -254,7 +264,7 @@ export function InvoiceViewPage() {
 
           {/* Totals */}
           <div className="flex justify-end">
-            <div className="w-72 space-y-2 text-sm">
+            <div className="w-full space-y-2 text-sm sm:w-72">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>{formatINR(invoice.subtotal)}</span>
@@ -289,7 +299,7 @@ export function InvoiceViewPage() {
           {(invoice.notes || invoice.terms) && (
             <>
               <Separator />
-              <div className="grid grid-cols-2 gap-8 text-sm">
+              <div className="grid gap-8 text-sm md:grid-cols-2">
                 {invoice.notes && (
                   <div>
                     <p className="font-semibold mb-1">Notes</p>
@@ -316,11 +326,12 @@ export function InvoiceViewPage() {
       {(nextStatuses.length > 0 ||
         invoice.status === "draft" ||
         invoice.status === "cancelled") && (
-        <div className="flex items-center gap-2 print:hidden">
+        <div className="flex flex-col gap-2 print:hidden sm:flex-row sm:flex-wrap sm:items-center">
           {nextStatuses.map((s) => (
             <Button
               key={s.value}
               variant="outline"
+              className="w-full sm:w-auto"
               disabled={statusMutation.isPending}
               onClick={() =>
                 statusMutation.mutate({ id: invoice.id, status: s.value })
@@ -335,7 +346,7 @@ export function InvoiceViewPage() {
           {(invoice.status === "draft" || invoice.status === "cancelled") && (
             <Button
               variant="outline"
-              className="text-destructive hover:text-destructive ml-auto"
+              className="w-full text-destructive hover:text-destructive sm:ml-auto sm:w-auto"
               onClick={() => setDeleting(true)}
             >
               Delete Invoice

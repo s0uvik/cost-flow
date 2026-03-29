@@ -46,7 +46,7 @@ export function ClientListPage() {
         }
       />
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <ClientFilters
           q={q}
           onChange={(v) => {
@@ -59,7 +59,7 @@ export function ClientListPage() {
           }}
         />
         {!isLoading && (data?.count ?? 0) > 0 && (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground sm:text-right">
             {data?.count} client{data?.count !== 1 ? "s" : ""}
           </p>
         )}
@@ -109,7 +109,7 @@ export function ClientListPage() {
           </div>
 
           {(data?.pageCount ?? 0) > 1 && (
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-2 text-center sm:flex-row">
               <Button
                 variant="outline"
                 size="icon"

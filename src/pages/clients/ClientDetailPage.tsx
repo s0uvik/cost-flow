@@ -69,7 +69,7 @@ export function ClientDetailPage() {
     return (
       <div className="space-y-6">
         <Skeleton className="h-10 w-48" />
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} className="h-24" />
           ))}
@@ -97,6 +97,7 @@ export function ClientDetailPage() {
         action={
           <Button
             variant="outline"
+            className="w-full sm:w-auto"
             onClick={() => navigate({ to: "/clients" })}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -197,9 +198,13 @@ export function ClientDetailPage() {
 
       {/* Invoice History */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-base">Invoice History</CardTitle>
-          <Button size="sm" onClick={() => navigate({ to: "/invoices/new" })}>
+          <Button
+            size="sm"
+            className="w-full sm:w-auto"
+            onClick={() => navigate({ to: "/invoices/new" })}
+          >
             New Invoice
           </Button>
         </CardHeader>
@@ -210,56 +215,58 @@ export function ClientDetailPage() {
               <p className="text-sm text-muted-foreground">No invoices yet</p>
             </div>
           ) : (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left pb-3 font-medium text-muted-foreground">
-                    Invoice #
-                  </th>
-                  <th className="text-left pb-3 font-medium text-muted-foreground">
-                    Issue Date
-                  </th>
-                  <th className="text-left pb-3 font-medium text-muted-foreground">
-                    Due Date
-                  </th>
-                  <th className="text-left pb-3 font-medium text-muted-foreground">
-                    Status
-                  </th>
-                  <th className="text-right pb-3 font-medium text-muted-foreground">
-                    Total
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {invoices.map((inv) => (
-                  <tr
-                    key={inv.id}
-                    className="cursor-pointer hover:bg-muted/40 transition-colors"
-                    onClick={() =>
-                      navigate({ to: "/invoices/$id", params: { id: inv.id } })
-                    }
-                  >
-                    <td className="py-3 font-mono font-medium">
-                      {inv.invoice_number}
-                    </td>
-                    <td className="py-3 text-muted-foreground">
-                      {format(parseISO(inv.issue_date), "dd MMM yyyy")}
-                    </td>
-                    <td className="py-3 text-muted-foreground">
-                      {format(parseISO(inv.due_date), "dd MMM yyyy")}
-                    </td>
-                    <td className="py-3">
-                      <InvoiceStatusBadge
-                        status={inv.status as InvoiceStatus}
-                      />
-                    </td>
-                    <td className="py-3 text-right font-semibold">
-                      {formatINR(inv.total)}
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[640px] text-sm">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left pb-3 font-medium text-muted-foreground">
+                      Invoice #
+                    </th>
+                    <th className="text-left pb-3 font-medium text-muted-foreground">
+                      Issue Date
+                    </th>
+                    <th className="text-left pb-3 font-medium text-muted-foreground">
+                      Due Date
+                    </th>
+                    <th className="text-left pb-3 font-medium text-muted-foreground">
+                      Status
+                    </th>
+                    <th className="text-right pb-3 font-medium text-muted-foreground">
+                      Total
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y">
+                  {invoices.map((inv) => (
+                    <tr
+                      key={inv.id}
+                      className="cursor-pointer transition-colors hover:bg-muted/40"
+                      onClick={() =>
+                        navigate({ to: "/invoices/$id", params: { id: inv.id } })
+                      }
+                    >
+                      <td className="py-3 font-mono font-medium">
+                        {inv.invoice_number}
+                      </td>
+                      <td className="py-3 text-muted-foreground">
+                        {format(parseISO(inv.issue_date), "dd MMM yyyy")}
+                      </td>
+                      <td className="py-3 text-muted-foreground">
+                        {format(parseISO(inv.due_date), "dd MMM yyyy")}
+                      </td>
+                      <td className="py-3">
+                        <InvoiceStatusBadge
+                          status={inv.status as InvoiceStatus}
+                        />
+                      </td>
+                      <td className="py-3 text-right font-semibold">
+                        {formatINR(inv.total)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </CardContent>
       </Card>

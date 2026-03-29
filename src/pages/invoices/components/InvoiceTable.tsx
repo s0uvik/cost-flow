@@ -72,7 +72,7 @@ export function InvoiceTable({
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
-        <Table>
+        <Table className="min-w-[760px]">
           <TableHeader>
             <TableRow>
               <TableHead>Invoice #</TableHead>
@@ -211,7 +211,7 @@ export function InvoiceTable({
       </div>
 
       {pageCount > 1 && (
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <span>
             {count} invoice{count !== 1 ? "s" : ""}
           </span>

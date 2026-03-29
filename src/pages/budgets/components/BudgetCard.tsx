@@ -53,7 +53,7 @@ export function BudgetCard({ budget, onEdit, onDelete }: Props) {
             )}
           </div>
         </div>
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-1">
           <Badge variant="secondary" className="text-xs">
             {PERIOD_LABELS[budget.period]}
           </Badge>
@@ -98,7 +98,7 @@ export function BudgetCard({ budget, onEdit, onDelete }: Props) {
             style={{ width: `${budget.percentage}%` }}
           />
         </div>
-        <div className="flex items-center justify-between text-xs">
+        <div className="flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between">
           <span
             className={`font-medium ${isOver ? "text-destructive" : isWarning ? "text-amber-600" : "text-muted-foreground"}`}
           >

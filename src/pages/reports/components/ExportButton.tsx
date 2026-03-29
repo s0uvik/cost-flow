@@ -243,6 +243,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
     <Button
       variant="outline"
       size="sm"
+      className="w-full sm:w-auto"
       onClick={handleExport}
       disabled={loading}
     >

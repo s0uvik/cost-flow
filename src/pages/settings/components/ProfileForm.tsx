@@ -99,7 +99,7 @@ export function ProfileForm() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-4"
               >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="business_name"
@@ -179,7 +179,11 @@ export function ProfileForm() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" disabled={updateMutation.isPending}>
+                  <Button
+                    type="submit"
+                    className="w-full sm:w-auto"
+                    disabled={updateMutation.isPending}
+                  >
                     {updateMutation.isPending && (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     )}

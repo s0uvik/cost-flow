@@ -22,10 +22,10 @@ export function AppHeader() {
   const title = routeTitles[pathname] ?? "Expense Tracker";
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
+    <header className="flex h-14 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-2 h-4" />
-      <h1 className="text-sm font-semibold">{title}</h1>
+      <h1 className="truncate text-sm font-semibold">{title}</h1>
     </header>
   );
 }

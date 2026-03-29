@@ -128,7 +128,7 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
             {editing ? "Edit Transaction" : "New Transaction"}
@@ -144,7 +144,7 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Type</FormLabel>
-                  <div className="flex gap-2">
+                  <div className="grid gap-2 sm:grid-cols-2">
                     {(["income", "expense"] as const).map((t) => (
                       <button
                         key={t}
@@ -266,7 +266,7 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Payment Method</FormLabel>
-                  <div className="flex gap-2">
+                  <div className="grid gap-2 sm:grid-cols-2">
                     {(["cash", "account"] as const).map((m) => (
                       <button
                         key={m}
@@ -343,10 +343,15 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
             />
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full sm:w-auto"
+                onClick={onClose}
+              >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isPending}>
+              <Button type="submit" className="w-full sm:w-auto" disabled={isPending}>
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {editing ? "Save Changes" : "Add Transaction"}
               </Button>

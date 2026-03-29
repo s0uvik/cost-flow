@@ -49,7 +49,7 @@ export function BudgetSummary({ budgets }: Props) {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((s) => (
         <Card key={s.label}>
           <CardContent className="p-4 flex items-center gap-3">

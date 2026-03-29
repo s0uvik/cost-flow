@@ -84,7 +84,7 @@ export function CategoryBreakdown({
           <Skeleton className="h-48 w-full" />
         ) : (
           <Tabs defaultValue="expenses">
-            <TabsList className="mb-4">
+            <TabsList className="mb-4 w-full justify-start">
               <TabsTrigger value="expenses">Expenses</TabsTrigger>
               <TabsTrigger value="income">Income</TabsTrigger>
             </TabsList>
