@@ -29,5 +29,5 @@ createRoot(document.getElementById("root")!).render(
       </NuqsAdapter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );

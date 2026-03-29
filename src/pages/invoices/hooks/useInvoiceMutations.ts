@@ -49,7 +49,7 @@ export function useCreateInvoice() {
             items.map(({ amount: _amount, ...item }) => ({
               ...item,
               invoice_id: inv.id,
-            })),
+            }))
           );
         if (itemsError) throw itemsError;
       }
@@ -68,10 +68,7 @@ export function useCreateInvoice() {
 export function useUpdateInvoice() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({
-      id,
-      ...payload
-    }: InvoicePayload & { id: string }) => {
+    mutationFn: async ({ id, ...payload }: InvoicePayload & { id: string }) => {
       const { items, ...invoiceData } = payload;
 
       const { error } = await supabase
@@ -89,7 +86,7 @@ export function useUpdateInvoice() {
             items.map(({ amount: _amount, ...item }) => ({
               ...item,
               invoice_id: id,
-            })),
+            }))
           );
         if (itemsError) throw itemsError;
       }

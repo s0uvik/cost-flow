@@ -62,7 +62,7 @@ export function useClients(filters: Filters) {
 
       if (filters.q) {
         query = query.or(
-          `name.ilike.%${filters.q}%,company.ilike.%${filters.q}%,email.ilike.%${filters.q}%`,
+          `name.ilike.%${filters.q}%,company.ilike.%${filters.q}%,email.ilike.%${filters.q}%`
         );
       }
 
@@ -76,7 +76,7 @@ export function useClients(filters: Filters) {
         .eq("user_id", userId)
         .in(
           "client_id",
-          clients.map((c) => c.id),
+          clients.map((c) => c.id)
         )
         .neq("status", "cancelled");
 

@@ -1,12 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
-export type InvoiceStatus =
-  | "draft"
-  | "sent"
-  | "paid"
-  | "overdue"
-  | "cancelled";
+export type InvoiceStatus = "draft" | "sent" | "paid" | "overdue" | "cancelled";
 
 export type InvoiceRow = {
   id: string;
@@ -92,7 +87,7 @@ export function useInvoices(filters: Filters) {
         .from("invoices")
         .select(
           "id, invoice_number, status, issue_date, due_date, subtotal, tax_amount, discount_amount, total, notes, client_id, clients(name, company)",
-          { count: "exact" },
+          { count: "exact" }
         )
         .eq("user_id", userId)
         .order("issue_date", { ascending: false })
@@ -126,7 +121,7 @@ export function useInvoice(id: string) {
       return {
         ...data,
         invoice_items: ((data.invoice_items ?? []) as InvoiceItem[]).sort(
-          (a, b) => a.sort_order - b.sort_order,
+          (a, b) => a.sort_order - b.sort_order
         ),
       } as InvoiceDetail;
     },

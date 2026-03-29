@@ -85,7 +85,7 @@ export function ClientDialog({ open, editing, onClose }: Props) {
             company: "",
             address: "",
             notes: "",
-          },
+          }
     );
   }, [editing, open]);
 

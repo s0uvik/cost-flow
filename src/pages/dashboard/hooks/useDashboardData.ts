@@ -187,7 +187,7 @@ export function useBudgetOverview() {
         supabase
           .from("budgets")
           .select(
-            "id, name, amount_limit, period, category_id, categories(name, color)",
+            "id, name, amount_limit, period, category_id, categories(name, color)"
           )
           .eq("user_id", userId!)
           .lte("start_date", monthEnd),

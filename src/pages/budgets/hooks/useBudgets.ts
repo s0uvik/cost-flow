@@ -61,7 +61,7 @@ export function useBudgets() {
       const { data: budgets } = await supabase
         .from("budgets")
         .select(
-          "id, name, amount_limit, period, start_date, end_date, category_id, categories(name, color)",
+          "id, name, amount_limit, period, start_date, end_date, category_id, categories(name, color)"
         )
         .eq("user_id", userId)
         .order("created_at", { ascending: false });
@@ -92,7 +92,7 @@ export function useBudgets() {
             (t) =>
               t.category_id === b.category_id &&
               t.date >= range.from &&
-              t.date <= range.to,
+              t.date <= range.to
           )
           .reduce((s, t) => s + t.amount, 0);
 

@@ -94,7 +94,7 @@ export function VendorDialog({ open, editing, onClose }: Props) {
             address: "",
             category_id: null,
             notes: "",
-          },
+          }
     );
   }, [editing, open]);
 

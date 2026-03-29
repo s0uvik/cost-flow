@@ -16,7 +16,7 @@ export function InvoiceListPage() {
   const [q, setQ] = useQueryState("q", parseAsString.withDefault(""));
   const [status, setStatus] = useQueryState(
     "status",
-    parseAsString.withDefault(""),
+    parseAsString.withDefault("")
   );
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(0));
   const [deleting, setDeleting] = useState<InvoiceRow | null>(null);

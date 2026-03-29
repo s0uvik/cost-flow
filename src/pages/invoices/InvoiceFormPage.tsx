@@ -46,9 +46,7 @@ export function InvoiceFormPage() {
       <InvoiceForm
         invoiceNumber={invoiceNumber}
         onCancel={() => navigate({ to: "/invoices" })}
-        onSaved={(id) =>
-          navigate({ to: "/invoices/$id", params: { id } })
-        }
+        onSaved={(id) => navigate({ to: "/invoices/$id", params: { id } })}
       />
     </div>
   );

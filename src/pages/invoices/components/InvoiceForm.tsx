@@ -26,7 +26,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAllClients } from "@/pages/clients/hooks/useClients";
-import { useCreateInvoice, useUpdateInvoice } from "../hooks/useInvoiceMutations";
+import {
+  useCreateInvoice,
+  useUpdateInvoice,
+} from "../hooks/useInvoiceMutations";
 import type { InvoiceDetail } from "../hooks/useInvoices";
 
 const itemSchema = z.object({
@@ -66,7 +69,12 @@ type Props = {
   onCancel: () => void;
 };
 
-export function InvoiceForm({ invoiceNumber, editing, onSaved, onCancel }: Props) {
+export function InvoiceForm({
+  invoiceNumber,
+  editing,
+  onSaved,
+  onCancel,
+}: Props) {
   const navigate = useNavigate();
   const { data: clients } = useAllClients();
   const createMutation = useCreateInvoice();
@@ -81,7 +89,7 @@ export function InvoiceForm({ invoiceNumber, editing, onSaved, onCancel }: Props
       issue_date: format(new Date(), "yyyy-MM-dd"),
       due_date: format(
         new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        "yyyy-MM-dd",
+        "yyyy-MM-dd"
       ),
       tax_rate: 0,
       discount_amount: 0,
@@ -127,7 +135,7 @@ export function InvoiceForm({ invoiceNumber, editing, onSaved, onCancel }: Props
 
   const subtotal = (watchedItems ?? []).reduce(
     (sum, item) => sum + (item.amount || 0),
-    0,
+    0
   );
   const taxAmount = subtotal * ((taxRate || 0) / 100);
   const total = subtotal + taxAmount - (discountAmount || 0);
@@ -168,9 +176,7 @@ export function InvoiceForm({ invoiceNumber, editing, onSaved, onCancel }: Props
       onSaved?.(editing.id);
     } else {
       const id = await createMutation.mutateAsync(payload);
-      onSaved
-        ? onSaved(id)
-        : navigate({ to: "/invoices/$id", params: { id } });
+      onSaved ? onSaved(id) : navigate({ to: "/invoices/$id", params: { id } });
     }
   }
 
@@ -383,7 +389,12 @@ export function InvoiceForm({ invoiceNumber, editing, onSaved, onCancel }: Props
               variant="outline"
               size="sm"
               onClick={() =>
-                append({ description: "", quantity: 1, unit_price: 0, amount: 0 })
+                append({
+                  description: "",
+                  quantity: 1,
+                  unit_price: 0,
+                  amount: 0,
+                })
               }
             >
               <Plus className="mr-1.5 h-3.5 w-3.5" />

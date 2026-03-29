@@ -15,11 +15,11 @@ export function TransactionListPage() {
   const [type, setType] = useQueryState("type", parseAsString.withDefault(""));
   const [categoryId, setCategoryId] = useQueryState(
     "category",
-    parseAsString.withDefault(""),
+    parseAsString.withDefault("")
   );
   const [paymentMethod, setPaymentMethod] = useQueryState(
     "payment",
-    parseAsString.withDefault(""),
+    parseAsString.withDefault("")
   );
   const [from, setFrom] = useQueryState("from", parseAsString.withDefault(""));
   const [to, setTo] = useQueryState("to", parseAsString.withDefault(""));

@@ -1,6 +1,13 @@
 import { useParams, useNavigate } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
-import { ArrowLeft, Mail, Phone, MapPin, Building2, FileText } from "lucide-react";
+import {
+  ArrowLeft,
+  Mail,
+  Phone,
+  MapPin,
+  Building2,
+  FileText,
+} from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -88,7 +95,10 @@ export function ClientDetailPage() {
         title={client.name}
         description={client.company ?? "Client"}
         action={
-          <Button variant="outline" onClick={() => navigate({ to: "/clients" })}>
+          <Button
+            variant="outline"
+            onClick={() => navigate({ to: "/clients" })}
+          >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Clients
           </Button>
@@ -113,7 +123,10 @@ export function ClientDetailPage() {
             {client.email && (
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
-                <a href={`mailto:${client.email}`} className="text-primary hover:underline">
+                <a
+                  href={`mailto:${client.email}`}
+                  className="text-primary hover:underline"
+                >
                   {client.email}
                 </a>
               </div>
@@ -200,11 +213,21 @@ export function ClientDetailPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left pb-3 font-medium text-muted-foreground">Invoice #</th>
-                  <th className="text-left pb-3 font-medium text-muted-foreground">Issue Date</th>
-                  <th className="text-left pb-3 font-medium text-muted-foreground">Due Date</th>
-                  <th className="text-left pb-3 font-medium text-muted-foreground">Status</th>
-                  <th className="text-right pb-3 font-medium text-muted-foreground">Total</th>
+                  <th className="text-left pb-3 font-medium text-muted-foreground">
+                    Invoice #
+                  </th>
+                  <th className="text-left pb-3 font-medium text-muted-foreground">
+                    Issue Date
+                  </th>
+                  <th className="text-left pb-3 font-medium text-muted-foreground">
+                    Due Date
+                  </th>
+                  <th className="text-left pb-3 font-medium text-muted-foreground">
+                    Status
+                  </th>
+                  <th className="text-right pb-3 font-medium text-muted-foreground">
+                    Total
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -216,7 +239,9 @@ export function ClientDetailPage() {
                       navigate({ to: "/invoices/$id", params: { id: inv.id } })
                     }
                   >
-                    <td className="py-3 font-mono font-medium">{inv.invoice_number}</td>
+                    <td className="py-3 font-mono font-medium">
+                      {inv.invoice_number}
+                    </td>
                     <td className="py-3 text-muted-foreground">
                       {format(parseISO(inv.issue_date), "dd MMM yyyy")}
                     </td>
@@ -224,7 +249,9 @@ export function ClientDetailPage() {
                       {format(parseISO(inv.due_date), "dd MMM yyyy")}
                     </td>
                     <td className="py-3">
-                      <InvoiceStatusBadge status={inv.status as InvoiceStatus} />
+                      <InvoiceStatusBadge
+                        status={inv.status as InvoiceStatus}
+                      />
                     </td>
                     <td className="py-3 text-right font-semibold">
                       {formatINR(inv.total)}

@@ -19,7 +19,7 @@ export function CategoryChart() {
   const { data, isLoading } = useCategoryExpenses();
 
   const chartConfig: ChartConfig = Object.fromEntries(
-    (data ?? []).map((c) => [c.name, { label: c.name, color: c.color }]),
+    (data ?? []).map((c) => [c.name, { label: c.name, color: c.color }])
   );
 
   const isEmpty = !data || data.length === 0;

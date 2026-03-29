@@ -43,7 +43,7 @@ export function useCategories() {
         .eq("user_id", userId)
         .in(
           "category_id",
-          categories.map((c) => c.id),
+          categories.map((c) => c.id)
         );
 
       const countMap: Record<string, number> = {};

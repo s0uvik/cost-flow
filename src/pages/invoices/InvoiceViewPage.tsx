@@ -122,7 +122,11 @@ export function InvoiceViewPage() {
             <Button
               variant="outline"
               onClick={() =>
-                generateInvoicePdf(invoice, profile?.business_name ?? undefined, profile?.currency ?? "INR")
+                generateInvoicePdf(
+                  invoice,
+                  profile?.business_name ?? undefined,
+                  profile?.currency ?? "INR"
+                )
               }
             >
               <Download className="mr-2 h-4 w-4" />
@@ -274,7 +278,9 @@ export function InvoiceViewPage() {
               <Separator />
               <div className="flex justify-between text-base font-bold">
                 <span>Total</span>
-                <span className="text-green-600">{formatINR(invoice.total)}</span>
+                <span className="text-green-600">
+                  {formatINR(invoice.total)}
+                </span>
               </div>
             </div>
           </div>
@@ -316,7 +322,9 @@ export function InvoiceViewPage() {
               key={s.value}
               variant="outline"
               disabled={statusMutation.isPending}
-              onClick={() => statusMutation.mutate({ id: invoice.id, status: s.value })}
+              onClick={() =>
+                statusMutation.mutate({ id: invoice.id, status: s.value })
+              }
             >
               {statusMutation.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

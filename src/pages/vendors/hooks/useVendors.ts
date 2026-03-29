@@ -36,7 +36,7 @@ export function useVendors(filters: Filters) {
         .from("vendors")
         .select(
           "id, name, email, phone, address, category_id, notes, created_at, categories(name, color)",
-          { count: "exact" },
+          { count: "exact" }
         )
         .eq("user_id", userId)
         .order("name")
@@ -44,7 +44,7 @@ export function useVendors(filters: Filters) {
 
       if (filters.q) {
         query = query.or(
-          `name.ilike.%${filters.q}%,email.ilike.%${filters.q}%`,
+          `name.ilike.%${filters.q}%,email.ilike.%${filters.q}%`
         );
       }
       if (filters.categoryId) {
@@ -62,7 +62,7 @@ export function useVendors(filters: Filters) {
         .eq("type", "expense")
         .in(
           "vendor_id",
-          vendors.map((v) => v.id),
+          vendors.map((v) => v.id)
         );
 
       const statsMap: Record<string, { count: number; total: number }> = {};

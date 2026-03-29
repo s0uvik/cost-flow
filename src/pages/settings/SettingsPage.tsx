@@ -11,7 +11,7 @@ type Tab = (typeof TABS)[number];
 export function SettingsPage() {
   const [tab, setTab] = useQueryState(
     "tab",
-    parseAsStringEnum<Tab>([...TABS]).withDefault("profile"),
+    parseAsStringEnum<Tab>([...TABS]).withDefault("profile")
   );
 
   return (

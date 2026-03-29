@@ -64,7 +64,7 @@ export function ChangePasswordForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit((v) =>
-              mutation.mutate({ password: v.password }),
+              mutation.mutate({ password: v.password })
             )}
             className="space-y-4 max-w-sm"
           >

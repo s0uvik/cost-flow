@@ -44,7 +44,7 @@ export function useTransactions(filters: Filters) {
         .from("transactions")
         .select(
           "id, type, amount, description, date, notes, category_id, payment_method, payment_reference, categories(name, color)",
-          { count: "exact" },
+          { count: "exact" }
         )
         .eq("user_id", userId);
 

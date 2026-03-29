@@ -103,7 +103,7 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
   }, [editing, open]);
 
   const filteredCategories = categories?.filter(
-    (c) => !selectedType || c.type === selectedType,
+    (c) => !selectedType || c.type === selectedType
   );
 
   async function onSubmit(values: FormValues) {

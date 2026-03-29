@@ -13,7 +13,7 @@ export function CategoriesPage() {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [defaultType, setDefaultType] = useState<"income" | "expense">(
-    "expense",
+    "expense"
   );
   const [editing, setEditing] = useState<CategoryRow | null>(null);
   const [deleting, setDeleting] = useState<CategoryRow | null>(null);

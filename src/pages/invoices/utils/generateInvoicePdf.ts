@@ -6,9 +6,18 @@ import type { InvoiceDetail } from "../hooks/useInvoices";
 // jsPDF ships Helvetica with WinAnsi encoding — only Latin-1 glyphs are safe.
 // ₹ (U+20B9) is not in that set and renders as "1". Use ASCII-safe symbols.
 const CURRENCY_SYMBOLS: Record<string, string> = {
-  USD: "$", EUR: "\u20AC", GBP: "\u00A3", JPY: "\u00A5",
-  CAD: "CA$", AUD: "A$", CHF: "CHF", CNY: "\u00A5",
-  INR: "Rs.", BDT: "Tk", SGD: "S$", MYR: "RM",
+  USD: "$",
+  EUR: "\u20AC",
+  GBP: "\u00A3",
+  JPY: "\u00A5",
+  CAD: "CA$",
+  AUD: "A$",
+  CHF: "CHF",
+  CNY: "\u00A5",
+  INR: "Rs.",
+  BDT: "Tk",
+  SGD: "S$",
+  MYR: "RM",
 };
 
 function formatCurrency(n: number, currencyCode: string): string {
@@ -21,19 +30,19 @@ function formatCurrency(n: number, currencyCode: string): string {
 }
 
 const C = {
-  black:   [15,  23,  42]  as [number, number, number],
-  muted:   [100, 116, 139] as [number, number, number],
-  border:  [226, 232, 240] as [number, number, number],
-  green:   [22,  163, 74]  as [number, number, number],
-  red:     [220, 38,  38]  as [number, number, number],
-  white:   [255, 255, 255] as [number, number, number],
+  black: [15, 23, 42] as [number, number, number],
+  muted: [100, 116, 139] as [number, number, number],
+  border: [226, 232, 240] as [number, number, number],
+  green: [22, 163, 74] as [number, number, number],
+  red: [220, 38, 38] as [number, number, number],
+  white: [255, 255, 255] as [number, number, number],
   badgeBg: [241, 245, 249] as [number, number, number],
 };
 
 export function generateInvoicePdf(
   invoice: InvoiceDetail,
   businessName?: string,
-  currency = "INR",
+  currency = "INR"
 ) {
   const fmt = (n: number) => formatCurrency(n, currency);
   const doc = new jsPDF({ unit: "mm", format: "a4" });
@@ -50,7 +59,8 @@ export function generateInvoicePdf(
   doc.text("INVOICE", M, y);
 
   // Status badge (top-right)
-  const statusLabel = invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1);
+  const statusLabel =
+    invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1);
   const badgePad = 5;
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
@@ -106,10 +116,19 @@ export function generateInvoicePdf(
     leftY += 5;
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...C.muted);
-    if (client.company)  { doc.text(client.company, M, leftY); leftY += 4.5; }
-    if (client.email)    { doc.text(client.email,   M, leftY); leftY += 4.5; }
-    if (client.phone)    { doc.text(client.phone,   M, leftY); leftY += 4.5; }
-    if (client.address)  {
+    if (client.company) {
+      doc.text(client.company, M, leftY);
+      leftY += 4.5;
+    }
+    if (client.email) {
+      doc.text(client.email, M, leftY);
+      leftY += 4.5;
+    }
+    if (client.phone) {
+      doc.text(client.phone, M, leftY);
+      leftY += 4.5;
+    }
+    if (client.address) {
       const lines = doc.splitTextToSize(client.address, midX - M - 6);
       doc.text(lines, M, leftY);
       leftY += lines.length * 4.5;
@@ -132,7 +151,7 @@ export function generateInvoicePdf(
     rightY += 5.5;
   };
   dateLabel("Issue Date", format(parseISO(invoice.issue_date), "dd MMM yyyy"));
-  dateLabel("Due Date",   format(parseISO(invoice.due_date),   "dd MMM yyyy"));
+  dateLabel("Due Date", format(parseISO(invoice.due_date), "dd MMM yyyy"));
 
   // Separator
   y = Math.max(leftY, rightY) + 5;
@@ -175,7 +194,11 @@ export function generateInvoicePdf(
     },
     // Ensure head cells in numeric columns are also right-aligned
     // (headStyles can override columnStyles halign in some autotable versions)
-    didParseCell: (data: { section: string; column: { index: number }; cell: { styles: { halign: string } } }) => {
+    didParseCell: (data: {
+      section: string;
+      column: { index: number };
+      cell: { styles: { halign: string } };
+    }) => {
       if (data.section === "head" && data.column.index > 0) {
         data.cell.styles.halign = "right";
       }
@@ -194,7 +217,7 @@ export function generateInvoicePdf(
     label: string,
     value: string,
     bold = false,
-    color: [number, number, number] = C.black,
+    color: [number, number, number] = C.black
   ) => {
     doc.setFont("helvetica", bold ? "bold" : "normal");
     doc.setFontSize(bold ? 10 : 9);

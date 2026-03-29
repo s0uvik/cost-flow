@@ -232,7 +232,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
         new Blob([buf], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }),
-        fileName,
+        fileName
       );
     } finally {
       setLoading(false);

@@ -23,15 +23,15 @@ const DATE_PRESETS: DatePreset[] = [
 export function ReportsPage() {
   const [preset, setPreset] = useQueryState(
     "preset",
-    parseAsStringEnum<DatePreset>(DATE_PRESETS).withDefault("this_month"),
+    parseAsStringEnum<DatePreset>(DATE_PRESETS).withDefault("this_month")
   );
   const [customFrom, setCustomFrom] = useQueryState(
     "from",
-    parseAsString.withDefault(format(new Date(), "yyyy-MM-01")),
+    parseAsString.withDefault(format(new Date(), "yyyy-MM-01"))
   );
   const [customTo, setCustomTo] = useQueryState(
     "to",
-    parseAsString.withDefault(format(new Date(), "yyyy-MM-dd")),
+    parseAsString.withDefault(format(new Date(), "yyyy-MM-dd"))
   );
 
   const { data, isLoading } = useReportsData(preset, customFrom, customTo);

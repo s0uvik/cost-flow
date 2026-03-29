@@ -24,7 +24,7 @@ export type DatePreset =
 export function getPresetRange(
   preset: DatePreset,
   customFrom?: string,
-  customTo?: string,
+  customTo?: string
 ) {
   const now = new Date();
   switch (preset) {
@@ -67,7 +67,7 @@ async function fetchUserId() {
 export function useReportsData(
   preset: DatePreset,
   customFrom?: string,
-  customTo?: string,
+  customTo?: string
 ) {
   return useQuery({
     queryKey: ["reports", preset, customFrom, customTo],
@@ -83,7 +83,7 @@ export function useReportsData(
         supabase
           .from("transactions")
           .select(
-            "id, type, amount, description, date, created_at, payment_method, payment_reference, category_id, vendor_id, client_id, categories(name, color), vendors(name), clients(name)",
+            "id, type, amount, description, date, created_at, payment_method, payment_reference, category_id, vendor_id, client_id, categories(name, color), vendors(name), clients(name)"
           )
           .eq("user_id", userId)
           .gte("date", fromStr)
@@ -144,10 +144,10 @@ export function useReportsData(
       }
 
       const expenseCategories = Object.values(expByCategory).sort(
-        (a, b) => b.amount - a.amount,
+        (a, b) => b.amount - a.amount
       );
       const incomeCategories = Object.values(incByCategory).sort(
-        (a, b) => b.amount - a.amount,
+        (a, b) => b.amount - a.amount
       );
 
       // Top vendors

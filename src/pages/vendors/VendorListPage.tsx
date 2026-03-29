@@ -15,7 +15,7 @@ export function VendorListPage() {
   const [q, setQ] = useQueryState("q", parseAsString.withDefault(""));
   const [categoryId, setCategoryId] = useQueryState(
     "category",
-    parseAsString.withDefault(""),
+    parseAsString.withDefault("")
   );
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(0));
 
