@@ -1,4 +1,4 @@
-import { PageHeader } from '@/components/shared/PageHeader'
+import { PageHeader } from "@/components/shared/PageHeader";
 
 export function InvoiceViewPage() {
   return (
@@ -6,5 +6,5 @@ export function InvoiceViewPage() {
       <PageHeader title="InvoiceView" />
       <p className="text-muted-foreground">InvoiceViewPage coming soon...</p>
     </div>
-  )
+  );
 }

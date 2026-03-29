@@ -7,371 +7,371 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       profiles: {
         Row: {
-          id: string
-          business_name: string
-          owner_name: string
-          email: string | null
-          phone: string | null
-          address: string | null
-          logo_url: string | null
-          currency: string
-          tax_name: string | null
-          tax_rate: number
-          created_at: string
-          updated_at: string
-        }
+          id: string;
+          business_name: string;
+          owner_name: string;
+          email: string | null;
+          phone: string | null;
+          address: string | null;
+          logo_url: string | null;
+          currency: string;
+          tax_name: string | null;
+          tax_rate: number;
+          created_at: string;
+          updated_at: string;
+        };
         Insert: {
-          id: string
-          business_name?: string
-          owner_name?: string
-          email?: string | null
-          phone?: string | null
-          address?: string | null
-          logo_url?: string | null
-          currency?: string
-          tax_name?: string | null
-          tax_rate?: number
-          created_at?: string
-          updated_at?: string
-        }
+          id: string;
+          business_name?: string;
+          owner_name?: string;
+          email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          logo_url?: string | null;
+          currency?: string;
+          tax_name?: string | null;
+          tax_rate?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
         Update: {
-          business_name?: string
-          owner_name?: string
-          email?: string | null
-          phone?: string | null
-          address?: string | null
-          logo_url?: string | null
-          currency?: string
-          tax_name?: string | null
-          tax_rate?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          business_name?: string;
+          owner_name?: string;
+          email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          logo_url?: string | null;
+          currency?: string;
+          tax_name?: string | null;
+          tax_rate?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       categories: {
         Row: {
-          id: string
-          user_id: string
-          name: string
-          type: 'income' | 'expense'
-          color: string
-          icon: string | null
-          is_default: boolean
-          created_at: string
-        }
+          id: string;
+          user_id: string;
+          name: string;
+          type: "income" | "expense";
+          color: string;
+          icon: string | null;
+          is_default: boolean;
+          created_at: string;
+        };
         Insert: {
-          id?: string
-          user_id: string
-          name: string
-          type: 'income' | 'expense'
-          color?: string
-          icon?: string | null
-          is_default?: boolean
-          created_at?: string
-        }
+          id?: string;
+          user_id: string;
+          name: string;
+          type: "income" | "expense";
+          color?: string;
+          icon?: string | null;
+          is_default?: boolean;
+          created_at?: string;
+        };
         Update: {
-          name?: string
-          type?: 'income' | 'expense'
-          color?: string
-          icon?: string | null
-          is_default?: boolean
-        }
-        Relationships: []
-      }
+          name?: string;
+          type?: "income" | "expense";
+          color?: string;
+          icon?: string | null;
+          is_default?: boolean;
+        };
+        Relationships: [];
+      };
       clients: {
         Row: {
-          id: string
-          user_id: string
-          name: string
-          email: string | null
-          phone: string | null
-          address: string | null
-          company: string | null
-          notes: string | null
-          created_at: string
-          updated_at: string
-        }
+          id: string;
+          user_id: string;
+          name: string;
+          email: string | null;
+          phone: string | null;
+          address: string | null;
+          company: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
         Insert: {
-          id?: string
-          user_id: string
-          name: string
-          email?: string | null
-          phone?: string | null
-          address?: string | null
-          company?: string | null
-          notes?: string | null
-        }
+          id?: string;
+          user_id: string;
+          name: string;
+          email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          company?: string | null;
+          notes?: string | null;
+        };
         Update: {
-          name?: string
-          email?: string | null
-          phone?: string | null
-          address?: string | null
-          company?: string | null
-          notes?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          name?: string;
+          email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          company?: string | null;
+          notes?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       vendors: {
         Row: {
-          id: string
-          user_id: string
-          name: string
-          email: string | null
-          phone: string | null
-          address: string | null
-          category_id: string | null
-          notes: string | null
-          created_at: string
-          updated_at: string
-        }
+          id: string;
+          user_id: string;
+          name: string;
+          email: string | null;
+          phone: string | null;
+          address: string | null;
+          category_id: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
         Insert: {
-          id?: string
-          user_id: string
-          name: string
-          email?: string | null
-          phone?: string | null
-          address?: string | null
-          category_id?: string | null
-          notes?: string | null
-        }
+          id?: string;
+          user_id: string;
+          name: string;
+          email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          category_id?: string | null;
+          notes?: string | null;
+        };
         Update: {
-          name?: string
-          email?: string | null
-          phone?: string | null
-          address?: string | null
-          category_id?: string | null
-          notes?: string | null
-          updated_at?: string
-        }
+          name?: string;
+          email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          category_id?: string | null;
+          notes?: string | null;
+          updated_at?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "vendors_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "vendors_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       transactions: {
         Row: {
-          id: string
-          user_id: string
-          type: 'income' | 'expense'
-          amount: number
-          description: string
-          category_id: string | null
-          vendor_id: string | null
-          client_id: string | null
-          date: string
-          receipt_url: string | null
-          notes: string | null
-          tags: string[] | null
-          payment_method: 'cash' | 'account'
-          payment_reference: string | null
-          created_at: string
-          updated_at: string
-        }
+          id: string;
+          user_id: string;
+          type: "income" | "expense";
+          amount: number;
+          description: string;
+          category_id: string | null;
+          vendor_id: string | null;
+          client_id: string | null;
+          date: string;
+          receipt_url: string | null;
+          notes: string | null;
+          tags: string[] | null;
+          payment_method: "cash" | "account";
+          payment_reference: string | null;
+          created_at: string;
+          updated_at: string;
+        };
         Insert: {
-          id?: string
-          user_id: string
-          type: 'income' | 'expense'
-          amount: number
-          description: string
-          category_id?: string | null
-          vendor_id?: string | null
-          client_id?: string | null
-          date: string
-          receipt_url?: string | null
-          notes?: string | null
-          tags?: string[] | null
-          payment_method?: 'cash' | 'account'
-          payment_reference?: string | null
-        }
+          id?: string;
+          user_id: string;
+          type: "income" | "expense";
+          amount: number;
+          description: string;
+          category_id?: string | null;
+          vendor_id?: string | null;
+          client_id?: string | null;
+          date: string;
+          receipt_url?: string | null;
+          notes?: string | null;
+          tags?: string[] | null;
+          payment_method?: "cash" | "account";
+          payment_reference?: string | null;
+        };
         Update: {
-          type?: 'income' | 'expense'
-          amount?: number
-          description?: string
-          category_id?: string | null
-          vendor_id?: string | null
-          client_id?: string | null
-          date?: string
-          receipt_url?: string | null
-          notes?: string | null
-          tags?: string[] | null
-          payment_method?: 'cash' | 'account'
-          payment_reference?: string | null
-          updated_at?: string
-        }
+          type?: "income" | "expense";
+          amount?: number;
+          description?: string;
+          category_id?: string | null;
+          vendor_id?: string | null;
+          client_id?: string | null;
+          date?: string;
+          receipt_url?: string | null;
+          notes?: string | null;
+          tags?: string[] | null;
+          payment_method?: "cash" | "account";
+          payment_reference?: string | null;
+          updated_at?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "transactions_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
+            foreignKeyName: "transactions_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "transactions_vendor_id_fkey"
-            columns: ["vendor_id"]
-            isOneToOne: false
-            referencedRelation: "vendors"
-            referencedColumns: ["id"]
+            foreignKeyName: "transactions_vendor_id_fkey";
+            columns: ["vendor_id"];
+            isOneToOne: false;
+            referencedRelation: "vendors";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "transactions_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "clients"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "transactions_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       budgets: {
         Row: {
-          id: string
-          user_id: string
-          category_id: string | null
-          name: string
-          amount_limit: number
-          period: 'monthly' | 'quarterly' | 'yearly'
-          start_date: string
-          end_date: string | null
-          created_at: string
-        }
+          id: string;
+          user_id: string;
+          category_id: string | null;
+          name: string;
+          amount_limit: number;
+          period: "monthly" | "quarterly" | "yearly";
+          start_date: string;
+          end_date: string | null;
+          created_at: string;
+        };
         Insert: {
-          id?: string
-          user_id: string
-          category_id?: string | null
-          name: string
-          amount_limit: number
-          period: 'monthly' | 'quarterly' | 'yearly'
-          start_date: string
-          end_date?: string | null
-        }
+          id?: string;
+          user_id: string;
+          category_id?: string | null;
+          name: string;
+          amount_limit: number;
+          period: "monthly" | "quarterly" | "yearly";
+          start_date: string;
+          end_date?: string | null;
+        };
         Update: {
-          category_id?: string | null
-          name?: string
-          amount_limit?: number
-          period?: 'monthly' | 'quarterly' | 'yearly'
-          start_date?: string
-          end_date?: string | null
-        }
+          category_id?: string | null;
+          name?: string;
+          amount_limit?: number;
+          period?: "monthly" | "quarterly" | "yearly";
+          start_date?: string;
+          end_date?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "budgets_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "budgets_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       invoices: {
         Row: {
-          id: string
-          user_id: string
-          client_id: string | null
-          invoice_number: string
-          status: 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled'
-          issue_date: string
-          due_date: string
-          subtotal: number
-          tax_rate: number
-          tax_amount: number
-          discount_amount: number
-          total: number
-          notes: string | null
-          terms: string | null
-          created_at: string
-          updated_at: string
-        }
+          id: string;
+          user_id: string;
+          client_id: string | null;
+          invoice_number: string;
+          status: "draft" | "sent" | "paid" | "overdue" | "cancelled";
+          issue_date: string;
+          due_date: string;
+          subtotal: number;
+          tax_rate: number;
+          tax_amount: number;
+          discount_amount: number;
+          total: number;
+          notes: string | null;
+          terms: string | null;
+          created_at: string;
+          updated_at: string;
+        };
         Insert: {
-          id?: string
-          user_id: string
-          client_id?: string | null
-          invoice_number: string
-          status?: 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled'
-          issue_date: string
-          due_date: string
-          subtotal?: number
-          tax_rate?: number
-          tax_amount?: number
-          discount_amount?: number
-          total?: number
-          notes?: string | null
-          terms?: string | null
-        }
+          id?: string;
+          user_id: string;
+          client_id?: string | null;
+          invoice_number: string;
+          status?: "draft" | "sent" | "paid" | "overdue" | "cancelled";
+          issue_date: string;
+          due_date: string;
+          subtotal?: number;
+          tax_rate?: number;
+          tax_amount?: number;
+          discount_amount?: number;
+          total?: number;
+          notes?: string | null;
+          terms?: string | null;
+        };
         Update: {
-          client_id?: string | null
-          invoice_number?: string
-          status?: 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled'
-          issue_date?: string
-          due_date?: string
-          subtotal?: number
-          tax_rate?: number
-          tax_amount?: number
-          discount_amount?: number
-          total?: number
-          notes?: string | null
-          terms?: string | null
-          updated_at?: string
-        }
+          client_id?: string | null;
+          invoice_number?: string;
+          status?: "draft" | "sent" | "paid" | "overdue" | "cancelled";
+          issue_date?: string;
+          due_date?: string;
+          subtotal?: number;
+          tax_rate?: number;
+          tax_amount?: number;
+          discount_amount?: number;
+          total?: number;
+          notes?: string | null;
+          terms?: string | null;
+          updated_at?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "invoices_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "clients"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "invoices_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       invoice_items: {
         Row: {
-          id: string
-          invoice_id: string
-          description: string
-          quantity: number
-          unit_price: number
-          amount: number
-          sort_order: number
-        }
+          id: string;
+          invoice_id: string;
+          description: string;
+          quantity: number;
+          unit_price: number;
+          amount: number;
+          sort_order: number;
+        };
         Insert: {
-          id?: string
-          invoice_id: string
-          description: string
-          quantity?: number
-          unit_price: number
-          sort_order?: number
-        }
+          id?: string;
+          invoice_id: string;
+          description: string;
+          quantity?: number;
+          unit_price: number;
+          sort_order?: number;
+        };
         Update: {
-          description?: string
-          quantity?: number
-          unit_price?: number
-          sort_order?: number
-        }
+          description?: string;
+          quantity?: number;
+          unit_price?: number;
+          sort_order?: number;
+        };
         Relationships: [
           {
-            foreignKeyName: "invoice_items_invoice_id_fkey"
-            columns: ["invoice_id"]
-            isOneToOne: false
-            referencedRelation: "invoices"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-    }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
-  }
-}
+            foreignKeyName: "invoice_items_invoice_id_fkey";
+            columns: ["invoice_id"];
+            isOneToOne: false;
+            referencedRelation: "invoices";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+  };
+};

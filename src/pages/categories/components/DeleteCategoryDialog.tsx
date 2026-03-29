@@ -1,4 +1,4 @@
-import { Loader2, AlertTriangle } from 'lucide-react'
+import { Loader2, AlertTriangle } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -6,23 +6,23 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { useDeleteCategory } from '../hooks/useCategoryMutations'
-import type { CategoryRow } from '../hooks/useCategories'
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useDeleteCategory } from "../hooks/useCategoryMutations";
+import type { CategoryRow } from "../hooks/useCategories";
 
 type Props = {
-  category: CategoryRow | null
-  onClose: () => void
-}
+  category: CategoryRow | null;
+  onClose: () => void;
+};
 
 export function DeleteCategoryDialog({ category, onClose }: Props) {
-  const deleteMutation = useDeleteCategory()
+  const deleteMutation = useDeleteCategory();
 
   async function handleDelete() {
-    if (!category) return
-    await deleteMutation.mutateAsync(category.id)
-    onClose()
+    if (!category) return;
+    await deleteMutation.mutateAsync(category.id);
+    onClose();
   }
 
   return (
@@ -34,24 +34,36 @@ export function DeleteCategoryDialog({ category, onClose }: Props) {
             Delete Category
           </DialogTitle>
           <DialogDescription className="pt-1">
-            Delete{' '}
-            <span className="font-medium text-foreground">"{category?.name}"</span>?{' '}
+            Delete{" "}
+            <span className="font-medium text-foreground">
+              "{category?.name}"
+            </span>
+            ?{" "}
             {(category?.transaction_count ?? 0) > 0 && (
               <span className="text-destructive font-medium">
-                This will unlink {category?.transaction_count} transaction{category?.transaction_count !== 1 ? 's' : ''}.
+                This will unlink {category?.transaction_count} transaction
+                {category?.transaction_count !== 1 ? "s" : ""}.
               </span>
-            )}{' '}
+            )}{" "}
             This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button variant="destructive" onClick={handleDelete} disabled={deleteMutation.isPending}>
-            {deleteMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={deleteMutation.isPending}
+          >
+            {deleteMutation.isPending && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
             Delete
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

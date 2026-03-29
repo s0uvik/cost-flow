@@ -1,4 +1,4 @@
-import { PageHeader } from '@/components/shared/PageHeader'
+import { PageHeader } from "@/components/shared/PageHeader";
 
 export function VendorDetailPage() {
   return (
@@ -6,5 +6,5 @@ export function VendorDetailPage() {
       <PageHeader title="VendorDetail" />
       <p className="text-muted-foreground">VendorDetailPage coming soon...</p>
     </div>
-  )
+  );
 }

@@ -1,44 +1,47 @@
-import { useState } from 'react'
-import { useQueryState, parseAsString, parseAsInteger } from 'nuqs'
-import { Plus, Building2, ChevronLeft, ChevronRight } from 'lucide-react'
-import { PageHeader } from '@/components/shared/PageHeader'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { VendorFilters } from './components/VendorFilters'
-import { VendorCard } from './components/VendorCard'
-import { VendorDialog } from './components/VendorDialog'
-import { DeleteVendorDialog } from './components/DeleteVendorDialog'
-import { useVendors } from './hooks/useVendors'
-import type { VendorRow } from './hooks/useVendors'
+import { useState } from "react";
+import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
+import { Plus, Building2, ChevronLeft, ChevronRight } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { VendorFilters } from "./components/VendorFilters";
+import { VendorCard } from "./components/VendorCard";
+import { VendorDialog } from "./components/VendorDialog";
+import { DeleteVendorDialog } from "./components/DeleteVendorDialog";
+import { useVendors } from "./hooks/useVendors";
+import type { VendorRow } from "./hooks/useVendors";
 
 export function VendorListPage() {
-  const [q, setQ] = useQueryState('q', parseAsString.withDefault(''))
-  const [categoryId, setCategoryId] = useQueryState('category', parseAsString.withDefault(''))
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0))
+  const [q, setQ] = useQueryState("q", parseAsString.withDefault(""));
+  const [categoryId, setCategoryId] = useQueryState(
+    "category",
+    parseAsString.withDefault(""),
+  );
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(0));
 
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [editing, setEditing] = useState<VendorRow | null>(null)
-  const [deleting, setDeleting] = useState<VendorRow | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editing, setEditing] = useState<VendorRow | null>(null);
+  const [deleting, setDeleting] = useState<VendorRow | null>(null);
 
-  const { data, isLoading } = useVendors({ q, categoryId, page })
+  const { data, isLoading } = useVendors({ q, categoryId, page });
 
   function handleEdit(v: VendorRow) {
-    setEditing(v)
-    setDialogOpen(true)
+    setEditing(v);
+    setDialogOpen(true);
   }
 
   function handleCloseDialog() {
-    setDialogOpen(false)
-    setEditing(null)
+    setDialogOpen(false);
+    setEditing(null);
   }
 
   function handleReset() {
-    setQ('')
-    setCategoryId('')
-    setPage(0)
+    setQ("");
+    setCategoryId("");
+    setPage(0);
   }
 
-  const isEmpty = !isLoading && (data?.count ?? 0) === 0 && !q && !categoryId
+  const isEmpty = !isLoading && (data?.count ?? 0) === 0 && !q && !categoryId;
 
   return (
     <div className="space-y-6">
@@ -57,13 +60,19 @@ export function VendorListPage() {
         <VendorFilters
           q={q}
           categoryId={categoryId}
-          onSearch={(v) => { setQ(v); setPage(0) }}
-          onCategory={(v) => { setCategoryId(v); setPage(0) }}
+          onSearch={(v) => {
+            setQ(v);
+            setPage(0);
+          }}
+          onCategory={(v) => {
+            setCategoryId(v);
+            setPage(0);
+          }}
           onReset={handleReset}
         />
         {!isLoading && (data?.count ?? 0) > 0 && (
           <p className="text-sm text-muted-foreground">
-            {data?.count} vendor{data?.count !== 1 ? 's' : ''}
+            {data?.count} vendor{data?.count !== 1 ? "s" : ""}
           </p>
         )}
       </div>
@@ -72,7 +81,9 @@ export function VendorListPage() {
         <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
           <Building2 className="h-12 w-12 text-muted-foreground/40 mb-4" />
           <p className="font-medium mb-1">No vendors yet</p>
-          <p className="text-sm text-muted-foreground mb-4">Add vendors to track your business expenses</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Add vendors to track your business expenses
+          </p>
           <Button onClick={() => setDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
             Add Vendor
@@ -99,19 +110,37 @@ export function VendorListPage() {
                     <Skeleton className="h-3 w-32" />
                   </div>
                 ))
-              : data?.data.map(v => (
-                  <VendorCard key={v.id} vendor={v} onEdit={handleEdit} onDelete={setDeleting} />
-                ))
-            }
+              : data?.data.map((v) => (
+                  <VendorCard
+                    key={v.id}
+                    vendor={v}
+                    onEdit={handleEdit}
+                    onDelete={setDeleting}
+                  />
+                ))}
           </div>
 
           {(data?.pageCount ?? 0) > 1 && (
             <div className="flex items-center justify-center gap-2">
-              <Button variant="outline" size="icon" className="h-8 w-8" disabled={page === 0} onClick={() => setPage(page - 1)}>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                disabled={page === 0}
+                onClick={() => setPage(page - 1)}
+              >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <span className="text-sm text-muted-foreground">Page {page + 1} of {data?.pageCount}</span>
-              <Button variant="outline" size="icon" className="h-8 w-8" disabled={page >= (data?.pageCount ?? 1) - 1} onClick={() => setPage(page + 1)}>
+              <span className="text-sm text-muted-foreground">
+                Page {page + 1} of {data?.pageCount}
+              </span>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                disabled={page >= (data?.pageCount ?? 1) - 1}
+                onClick={() => setPage(page + 1)}
+              >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
@@ -119,8 +148,12 @@ export function VendorListPage() {
         </>
       )}
 
-      <VendorDialog open={dialogOpen} editing={editing} onClose={handleCloseDialog} />
+      <VendorDialog
+        open={dialogOpen}
+        editing={editing}
+        onClose={handleCloseDialog}
+      />
       <DeleteVendorDialog vendor={deleting} onClose={() => setDeleting(null)} />
     </div>
-  )
+  );
 }

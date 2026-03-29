@@ -1,12 +1,12 @@
-import { Search, X } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type Props = {
-  q: string
-  onChange: (q: string) => void
-  onReset: () => void
-}
+  q: string;
+  onChange: (q: string) => void;
+  onReset: () => void;
+};
 
 export function ClientFilters({ q, onChange, onReset }: Props) {
   return (
@@ -27,5 +27,5 @@ export function ClientFilters({ q, onChange, onReset }: Props) {
         </Button>
       )}
     </div>
-  )
+  );
 }

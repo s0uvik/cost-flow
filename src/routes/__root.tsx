@@ -1,15 +1,15 @@
-import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
-import { Toaster } from 'sonner'
-import type { QueryClient } from '@tanstack/react-query'
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { Toaster } from "sonner";
+import type { QueryClient } from "@tanstack/react-query";
 
 interface RouterContext {
-  queryClient: QueryClient
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
@@ -18,5 +18,5 @@ function RootComponent() {
       <Toaster richColors position="top-right" />
       {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>
-  )
+  );
 }

@@ -1,18 +1,22 @@
-import { Users } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })
+const fmt = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+});
 
-type ClientItem = { name: string; amount: number; count: number }
+type ClientItem = { name: string; amount: number; count: number };
 
 type Props = {
-  clients?: ClientItem[]
-  isLoading: boolean
-}
+  clients?: ClientItem[];
+  isLoading: boolean;
+};
 
 export function TopClients({ clients, isLoading }: Props) {
-  const max = clients?.[0]?.amount ?? 1
+  const max = clients?.[0]?.amount ?? 1;
 
   return (
     <Card>
@@ -22,10 +26,14 @@ export function TopClients({ clients, isLoading }: Props) {
       <CardContent>
         {isLoading ? (
           <div className="space-y-3">
-            {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-10 w-full" />)}
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-10 w-full" />
+            ))}
           </div>
         ) : !clients?.length ? (
-          <div className="flex h-32 items-center justify-center text-sm text-muted-foreground">No client data for this period</div>
+          <div className="flex h-32 items-center justify-center text-sm text-muted-foreground">
+            No client data for this period
+          </div>
         ) : (
           <div className="space-y-3">
             {clients.map((c, i) => (
@@ -39,8 +47,12 @@ export function TopClients({ clients, isLoading }: Props) {
                     <span className="text-sm truncate">{c.name}</span>
                   </div>
                   <div className="text-right ml-2 shrink-0">
-                    <p className="text-sm font-medium">{fmt.format(c.amount)}</p>
-                    <p className="text-xs text-muted-foreground">{c.count} invoice{c.count !== 1 ? 's' : ''}</p>
+                    <p className="text-sm font-medium">
+                      {fmt.format(c.amount)}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {c.count} invoice{c.count !== 1 ? "s" : ""}
+                    </p>
                   </div>
                 </div>
                 <div className="h-1.5 rounded-full bg-muted overflow-hidden">
@@ -55,5 +67,5 @@ export function TopClients({ clients, isLoading }: Props) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

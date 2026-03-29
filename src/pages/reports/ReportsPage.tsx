@@ -1,26 +1,40 @@
-import { useQueryState, parseAsString, parseAsStringEnum } from 'nuqs'
-import { format } from 'date-fns'
-import { PageHeader } from '@/components/shared/PageHeader'
-import { ReportDateRange } from './components/ReportDateRange'
-import { ReportSummaryCards } from './components/ReportSummaryCards'
-import { IncomeExpenseChart } from './components/IncomeExpenseChart'
-import { CategoryBreakdown } from './components/CategoryBreakdown'
-import { TopVendors } from './components/TopVendors'
-import { TopClients } from './components/TopClients'
-import { ExportButton } from './components/ExportButton'
-import { useReportsData, type DatePreset } from './hooks/useReportsData'
+import { useQueryState, parseAsString, parseAsStringEnum } from "nuqs";
+import { format } from "date-fns";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { ReportDateRange } from "./components/ReportDateRange";
+import { ReportSummaryCards } from "./components/ReportSummaryCards";
+import { IncomeExpenseChart } from "./components/IncomeExpenseChart";
+import { CategoryBreakdown } from "./components/CategoryBreakdown";
+import { TopVendors } from "./components/TopVendors";
+import { TopClients } from "./components/TopClients";
+import { ExportButton } from "./components/ExportButton";
+import { useReportsData, type DatePreset } from "./hooks/useReportsData";
 
-const DATE_PRESETS: DatePreset[] = ['this_month', 'last_month', 'this_quarter', 'last_quarter', 'this_year', 'last_year', 'custom']
+const DATE_PRESETS: DatePreset[] = [
+  "this_month",
+  "last_month",
+  "this_quarter",
+  "last_quarter",
+  "this_year",
+  "last_year",
+  "custom",
+];
 
 export function ReportsPage() {
   const [preset, setPreset] = useQueryState(
-    'preset',
-    parseAsStringEnum<DatePreset>(DATE_PRESETS).withDefault('this_month'),
-  )
-  const [customFrom, setCustomFrom] = useQueryState('from', parseAsString.withDefault(format(new Date(), 'yyyy-MM-01')))
-  const [customTo,   setCustomTo  ] = useQueryState('to',   parseAsString.withDefault(format(new Date(), 'yyyy-MM-dd')))
+    "preset",
+    parseAsStringEnum<DatePreset>(DATE_PRESETS).withDefault("this_month"),
+  );
+  const [customFrom, setCustomFrom] = useQueryState(
+    "from",
+    parseAsString.withDefault(format(new Date(), "yyyy-MM-01")),
+  );
+  const [customTo, setCustomTo] = useQueryState(
+    "to",
+    parseAsString.withDefault(format(new Date(), "yyyy-MM-dd")),
+  );
 
-  const { data, isLoading } = useReportsData(preset, customFrom, customTo)
+  const { data, isLoading } = useReportsData(preset, customFrom, customTo);
 
   return (
     <div className="space-y-6">
@@ -62,5 +76,5 @@ export function ReportsPage() {
         <TopClients clients={data?.topClients} isLoading={isLoading} />
       </div>
     </div>
-  )
+  );
 }

@@ -1,18 +1,22 @@
-import { Building2 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Building2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })
+const fmt = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+});
 
-type VendorItem = { name: string; amount: number; count: number }
+type VendorItem = { name: string; amount: number; count: number };
 
 type Props = {
-  vendors?: VendorItem[]
-  isLoading: boolean
-}
+  vendors?: VendorItem[];
+  isLoading: boolean;
+};
 
 export function TopVendors({ vendors, isLoading }: Props) {
-  const max = vendors?.[0]?.amount ?? 1
+  const max = vendors?.[0]?.amount ?? 1;
 
   return (
     <Card>
@@ -22,10 +26,14 @@ export function TopVendors({ vendors, isLoading }: Props) {
       <CardContent>
         {isLoading ? (
           <div className="space-y-3">
-            {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-10 w-full" />)}
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-10 w-full" />
+            ))}
           </div>
         ) : !vendors?.length ? (
-          <div className="flex h-32 items-center justify-center text-sm text-muted-foreground">No vendor data for this period</div>
+          <div className="flex h-32 items-center justify-center text-sm text-muted-foreground">
+            No vendor data for this period
+          </div>
         ) : (
           <div className="space-y-3">
             {vendors.map((v, i) => (
@@ -39,8 +47,12 @@ export function TopVendors({ vendors, isLoading }: Props) {
                     <span className="text-sm truncate">{v.name}</span>
                   </div>
                   <div className="text-right ml-2 shrink-0">
-                    <p className="text-sm font-medium">{fmt.format(v.amount)}</p>
-                    <p className="text-xs text-muted-foreground">{v.count} txn{v.count !== 1 ? 's' : ''}</p>
+                    <p className="text-sm font-medium">
+                      {fmt.format(v.amount)}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {v.count} txn{v.count !== 1 ? "s" : ""}
+                    </p>
                   </div>
                 </div>
                 <div className="h-1.5 rounded-full bg-muted overflow-hidden">
@@ -55,5 +67,5 @@ export function TopVendors({ vendors, isLoading }: Props) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

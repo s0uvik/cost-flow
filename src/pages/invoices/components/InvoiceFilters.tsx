@@ -1,40 +1,51 @@
-import { Search, X } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useInvoiceSummary } from '../hooks/useInvoices'
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useInvoiceSummary } from "../hooks/useInvoices";
 
 const STATUS_TABS = [
-  { value: '', label: 'All' },
-  { value: 'draft', label: 'Draft' },
-  { value: 'sent', label: 'Sent' },
-  { value: 'paid', label: 'Paid' },
-  { value: 'overdue', label: 'Overdue' },
-  { value: 'cancelled', label: 'Cancelled' },
-]
+  { value: "", label: "All" },
+  { value: "draft", label: "Draft" },
+  { value: "sent", label: "Sent" },
+  { value: "paid", label: "Paid" },
+  { value: "overdue", label: "Overdue" },
+  { value: "cancelled", label: "Cancelled" },
+];
 
 type Props = {
-  q: string
-  status: string
-  onSearch: (q: string) => void
-  onStatus: (s: string) => void
-  onReset: () => void
-}
+  q: string;
+  status: string;
+  onSearch: (q: string) => void;
+  onStatus: (s: string) => void;
+  onReset: () => void;
+};
 
-export function InvoiceFilters({ q, status, onSearch, onStatus, onReset }: Props) {
-  const { data: summary } = useInvoiceSummary()
-  const counts = summary?.counts
+export function InvoiceFilters({
+  q,
+  status,
+  onSearch,
+  onStatus,
+  onReset,
+}: Props) {
+  const { data: summary } = useInvoiceSummary();
+  const counts = summary?.counts;
 
   return (
     <div className="space-y-3">
-      <Tabs value={status || ''} onValueChange={onStatus}>
+      <Tabs value={status || ""} onValueChange={onStatus}>
         <TabsList className="h-9">
           {STATUS_TABS.map((tab) => {
-            const count = tab.value === ''
-              ? counts?.all
-              : counts?.[tab.value as keyof typeof counts]
+            const count =
+              tab.value === ""
+                ? counts?.all
+                : counts?.[tab.value as keyof typeof counts];
             return (
-              <TabsTrigger key={tab.value} value={tab.value} className="text-xs px-3">
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                className="text-xs px-3"
+              >
                 {tab.label}
                 {count !== undefined && count > 0 && (
                   <span className="ml-1.5 rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium">
@@ -42,7 +53,7 @@ export function InvoiceFilters({ q, status, onSearch, onStatus, onReset }: Props
                   </span>
                 )}
               </TabsTrigger>
-            )
+            );
           })}
         </TabsList>
       </Tabs>
@@ -65,5 +76,5 @@ export function InvoiceFilters({ q, status, onSearch, onStatus, onReset }: Props
         )}
       </div>
     </div>
-  )
+  );
 }

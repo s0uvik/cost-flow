@@ -1,35 +1,40 @@
-import { Search, X } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { useCategories } from '../hooks/useTransactions'
+} from "@/components/ui/select";
+import { useCategories } from "../hooks/useTransactions";
 
 type Filters = {
-  q: string
-  type: string
-  categoryId: string
-  paymentMethod: string
-  from: string
-  to: string
-}
+  q: string;
+  type: string;
+  categoryId: string;
+  paymentMethod: string;
+  from: string;
+  to: string;
+};
 
 type Props = {
-  filters: Filters
-  onChange: (patch: Partial<Filters>) => void
-  onReset: () => void
-}
+  filters: Filters;
+  onChange: (patch: Partial<Filters>) => void;
+  onReset: () => void;
+};
 
 export function TransactionFilters({ filters, onChange, onReset }: Props) {
-  const { data: categories } = useCategories()
+  const { data: categories } = useCategories();
 
   const hasActiveFilters =
-    filters.q || filters.type || filters.categoryId || filters.paymentMethod || filters.from || filters.to
+    filters.q ||
+    filters.type ||
+    filters.categoryId ||
+    filters.paymentMethod ||
+    filters.from ||
+    filters.to;
 
   return (
     <div className="flex flex-wrap gap-2 items-center">
@@ -43,7 +48,10 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         />
       </div>
 
-      <Select value={filters.type || 'all'} onValueChange={(v) => onChange({ type: v === 'all' ? '' : v })}>
+      <Select
+        value={filters.type || "all"}
+        onValueChange={(v) => onChange({ type: v === "all" ? "" : v })}
+      >
         <SelectTrigger className="w-36">
           <SelectValue placeholder="All types" />
         </SelectTrigger>
@@ -54,7 +62,10 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         </SelectContent>
       </Select>
 
-      <Select value={filters.categoryId || 'all'} onValueChange={(v) => onChange({ categoryId: v === 'all' ? '' : v })}>
+      <Select
+        value={filters.categoryId || "all"}
+        onValueChange={(v) => onChange({ categoryId: v === "all" ? "" : v })}
+      >
         <SelectTrigger className="w-40">
           <SelectValue placeholder="All categories" />
         </SelectTrigger>
@@ -63,7 +74,10 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
           {categories?.map((cat) => (
             <SelectItem key={cat.id} value={cat.id}>
               <span className="flex items-center gap-2">
-                <span className="size-2 rounded-full inline-block" style={{ backgroundColor: cat.color }} />
+                <span
+                  className="size-2 rounded-full inline-block"
+                  style={{ backgroundColor: cat.color }}
+                />
                 {cat.name}
               </span>
             </SelectItem>
@@ -71,7 +85,10 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         </SelectContent>
       </Select>
 
-      <Select value={filters.paymentMethod || 'all'} onValueChange={(v) => onChange({ paymentMethod: v === 'all' ? '' : v })}>
+      <Select
+        value={filters.paymentMethod || "all"}
+        onValueChange={(v) => onChange({ paymentMethod: v === "all" ? "" : v })}
+      >
         <SelectTrigger className="w-36">
           <SelectValue placeholder="All payments" />
         </SelectTrigger>
@@ -103,5 +120,5 @@ export function TransactionFilters({ filters, onChange, onReset }: Props) {
         </Button>
       )}
     </div>
-  )
+  );
 }

@@ -1,22 +1,32 @@
-import { Search, X } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
-} from '@/components/ui/select'
-import { useExpenseCategories } from '../hooks/useVendors'
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useExpenseCategories } from "../hooks/useVendors";
 
 type Props = {
-  q: string
-  categoryId: string
-  onSearch: (q: string) => void
-  onCategory: (id: string) => void
-  onReset: () => void
-}
+  q: string;
+  categoryId: string;
+  onSearch: (q: string) => void;
+  onCategory: (id: string) => void;
+  onReset: () => void;
+};
 
-export function VendorFilters({ q, categoryId, onSearch, onCategory, onReset }: Props) {
-  const { data: categories } = useExpenseCategories()
-  const hasFilter = q || categoryId
+export function VendorFilters({
+  q,
+  categoryId,
+  onSearch,
+  onCategory,
+  onReset,
+}: Props) {
+  const { data: categories } = useExpenseCategories();
+  const hasFilter = q || categoryId;
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -30,7 +40,10 @@ export function VendorFilters({ q, categoryId, onSearch, onCategory, onReset }: 
         />
       </div>
 
-      <Select value={categoryId || 'all'} onValueChange={(v) => onCategory(v === 'all' ? '' : v)}>
+      <Select
+        value={categoryId || "all"}
+        onValueChange={(v) => onCategory(v === "all" ? "" : v)}
+      >
         <SelectTrigger className="w-44">
           <SelectValue placeholder="All categories" />
         </SelectTrigger>
@@ -39,7 +52,10 @@ export function VendorFilters({ q, categoryId, onSearch, onCategory, onReset }: 
           {categories?.map((cat) => (
             <SelectItem key={cat.id} value={cat.id}>
               <span className="flex items-center gap-2">
-                <span className="size-2 rounded-full inline-block" style={{ backgroundColor: cat.color }} />
+                <span
+                  className="size-2 rounded-full inline-block"
+                  style={{ backgroundColor: cat.color }}
+                />
                 {cat.name}
               </span>
             </SelectItem>
@@ -54,5 +70,5 @@ export function VendorFilters({ q, categoryId, onSearch, onCategory, onReset }: 
         </Button>
       )}
     </div>
-  )
+  );
 }

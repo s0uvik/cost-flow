@@ -1,53 +1,69 @@
-import { useState } from 'react'
-import { Link, useRouter } from '@tanstack/react-router'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { toast } from 'sonner'
-import { Loader2 } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { useState } from "react";
+import { Link, useRouter } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const loginSchema = z.object({
-  email: z.string().email('Enter a valid email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-})
+  email: z.string().email("Enter a valid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
-type LoginValues = z.infer<typeof loginSchema>
+type LoginValues = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '' },
-  })
+    defaultValues: { email: "", password: "" },
+  });
 
   async function onSubmit(values: LoginValues) {
-    setLoading(true)
+    setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email: values.email,
       password: values.password,
-    })
-    setLoading(false)
+    });
+    setLoading(false);
 
     if (error) {
-      toast.error(error.message)
-      return
+      toast.error(error.message);
+      return;
     }
 
-    router.navigate({ to: '/' })
+    router.navigate({ to: "/" });
   }
 
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Sign in</CardTitle>
-        <CardDescription>Enter your credentials to access your account</CardDescription>
+        <CardDescription>
+          Enter your credentials to access your account
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -59,7 +75,11 @@ export function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="you@example.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="you@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,10 +107,13 @@ export function LoginPage() {
       </CardContent>
       <CardFooter className="text-sm text-center justify-center">
         Don't have an account?&nbsp;
-        <Link to="/register" className="underline underline-offset-4 hover:text-primary">
+        <Link
+          to="/register"
+          className="underline underline-offset-4 hover:text-primary"
+        >
           Sign up
         </Link>
       </CardFooter>
     </Card>
-  )
+  );
 }

@@ -1,21 +1,46 @@
-import { FileText, CheckCircle2, Clock, AlertTriangle } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useInvoiceSummary } from '../hooks/useInvoices'
+import { FileText, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useInvoiceSummary } from "../hooks/useInvoices";
 
 function formatINR(n: number) {
-  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n)
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(n);
 }
 
 export function InvoiceSummaryCards() {
-  const { data, isLoading } = useInvoiceSummary()
+  const { data, isLoading } = useInvoiceSummary();
 
   const cards = [
-    { label: 'Total Invoiced', value: formatINR(data?.total ?? 0), icon: FileText, iconClass: 'text-blue-500' },
-    { label: 'Paid', value: formatINR(data?.paid ?? 0), icon: CheckCircle2, iconClass: 'text-green-500' },
-    { label: 'Outstanding', value: formatINR(data?.outstanding ?? 0), icon: Clock, iconClass: 'text-amber-500' },
-    { label: 'Overdue', value: `${data?.overdue ?? 0} invoice${(data?.overdue ?? 0) !== 1 ? 's' : ''}`, icon: AlertTriangle, iconClass: (data?.overdue ?? 0) > 0 ? 'text-destructive' : 'text-muted-foreground' },
-  ]
+    {
+      label: "Total Invoiced",
+      value: formatINR(data?.total ?? 0),
+      icon: FileText,
+      iconClass: "text-blue-500",
+    },
+    {
+      label: "Paid",
+      value: formatINR(data?.paid ?? 0),
+      icon: CheckCircle2,
+      iconClass: "text-green-500",
+    },
+    {
+      label: "Outstanding",
+      value: formatINR(data?.outstanding ?? 0),
+      icon: Clock,
+      iconClass: "text-amber-500",
+    },
+    {
+      label: "Overdue",
+      value: `${data?.overdue ?? 0} invoice${(data?.overdue ?? 0) !== 1 ? "s" : ""}`,
+      icon: AlertTriangle,
+      iconClass:
+        (data?.overdue ?? 0) > 0 ? "text-destructive" : "text-muted-foreground",
+    },
+  ];
 
   return (
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -43,5 +68,5 @@ export function InvoiceSummaryCards() {
         </Card>
       ))}
     </div>
-  )
+  );
 }

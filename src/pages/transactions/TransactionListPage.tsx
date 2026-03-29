@@ -1,56 +1,62 @@
-import { useState } from 'react'
-import { useQueryState, parseAsInteger, parseAsString } from 'nuqs'
-import { Plus } from 'lucide-react'
-import { PageHeader } from '@/components/shared/PageHeader'
-import { Button } from '@/components/ui/button'
-import { TransactionFilters } from './components/TransactionFilters'
-import { TransactionTable } from './components/TransactionTable'
-import { TransactionDialog } from './components/TransactionDialog'
-import { DeleteTransactionDialog } from './components/DeleteTransactionDialog'
-import { useTransactions } from './hooks/useTransactions'
-import type { TransactionRow } from './hooks/useTransactions'
+import { useState } from "react";
+import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
+import { Plus } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { Button } from "@/components/ui/button";
+import { TransactionFilters } from "./components/TransactionFilters";
+import { TransactionTable } from "./components/TransactionTable";
+import { TransactionDialog } from "./components/TransactionDialog";
+import { DeleteTransactionDialog } from "./components/DeleteTransactionDialog";
+import { useTransactions } from "./hooks/useTransactions";
+import type { TransactionRow } from "./hooks/useTransactions";
 
 export function TransactionListPage() {
-  const [q, setQ] = useQueryState('q', parseAsString.withDefault(''))
-  const [type, setType] = useQueryState('type', parseAsString.withDefault(''))
-  const [categoryId, setCategoryId] = useQueryState('category', parseAsString.withDefault(''))
-  const [paymentMethod, setPaymentMethod] = useQueryState('payment', parseAsString.withDefault(''))
-  const [from, setFrom] = useQueryState('from', parseAsString.withDefault(''))
-  const [to, setTo] = useQueryState('to', parseAsString.withDefault(''))
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0))
+  const [q, setQ] = useQueryState("q", parseAsString.withDefault(""));
+  const [type, setType] = useQueryState("type", parseAsString.withDefault(""));
+  const [categoryId, setCategoryId] = useQueryState(
+    "category",
+    parseAsString.withDefault(""),
+  );
+  const [paymentMethod, setPaymentMethod] = useQueryState(
+    "payment",
+    parseAsString.withDefault(""),
+  );
+  const [from, setFrom] = useQueryState("from", parseAsString.withDefault(""));
+  const [to, setTo] = useQueryState("to", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(0));
 
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [editing, setEditing] = useState<TransactionRow | null>(null)
-  const [deleting, setDeleting] = useState<TransactionRow | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editing, setEditing] = useState<TransactionRow | null>(null);
+  const [deleting, setDeleting] = useState<TransactionRow | null>(null);
 
   const { data, isLoading } = useTransactions({
     q,
-    type: type as '' | 'income' | 'expense',
+    type: type as "" | "income" | "expense",
     categoryId,
-    paymentMethod: paymentMethod as '' | 'cash' | 'account',
+    paymentMethod: paymentMethod as "" | "cash" | "account",
     from,
     to,
     page,
-  })
+  });
 
   function handleEdit(tx: TransactionRow) {
-    setEditing(tx)
-    setDialogOpen(true)
+    setEditing(tx);
+    setDialogOpen(true);
   }
 
   function handleCloseDialog() {
-    setDialogOpen(false)
-    setEditing(null)
+    setDialogOpen(false);
+    setEditing(null);
   }
 
   function handleReset() {
-    setQ('')
-    setType('')
-    setCategoryId('')
-    setPaymentMethod('')
-    setFrom('')
-    setTo('')
-    setPage(0)
+    setQ("");
+    setType("");
+    setCategoryId("");
+    setPaymentMethod("");
+    setFrom("");
+    setTo("");
+    setPage(0);
   }
 
   return (
@@ -69,13 +75,14 @@ export function TransactionListPage() {
       <TransactionFilters
         filters={{ q, type, categoryId, paymentMethod, from, to }}
         onChange={(patch) => {
-          if ('q' in patch) setQ(patch.q ?? '')
-          if ('type' in patch) setType(patch.type ?? '')
-          if ('categoryId' in patch) setCategoryId(patch.categoryId ?? '')
-          if ('paymentMethod' in patch) setPaymentMethod(patch.paymentMethod ?? '')
-          if ('from' in patch) setFrom(patch.from ?? '')
-          if ('to' in patch) setTo(patch.to ?? '')
-          setPage(0)
+          if ("q" in patch) setQ(patch.q ?? "");
+          if ("type" in patch) setType(patch.type ?? "");
+          if ("categoryId" in patch) setCategoryId(patch.categoryId ?? "");
+          if ("paymentMethod" in patch)
+            setPaymentMethod(patch.paymentMethod ?? "");
+          if ("from" in patch) setFrom(patch.from ?? "");
+          if ("to" in patch) setTo(patch.to ?? "");
+          setPage(0);
         }}
         onReset={handleReset}
       />
@@ -102,5 +109,5 @@ export function TransactionListPage() {
         onClose={() => setDeleting(null)}
       />
     </div>
-  )
+  );
 }
