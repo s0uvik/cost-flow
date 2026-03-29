@@ -28,6 +28,7 @@ export function StatCards() {
     )
   }
 
+  const net = data?.net ?? 0
   const cards = [
     {
       title: 'Income',
@@ -35,6 +36,7 @@ export function StatCards() {
       sub: 'This month',
       icon: TrendingUp,
       iconClass: 'text-green-500',
+      valueClass: 'text-green-600',
     },
     {
       title: 'Expenses',
@@ -42,13 +44,15 @@ export function StatCards() {
       sub: 'This month',
       icon: TrendingDown,
       iconClass: 'text-red-500',
+      valueClass: 'text-red-600',
     },
     {
       title: 'Net Balance',
-      value: formatCurrency(data?.net ?? 0),
+      value: formatCurrency(net),
       sub: 'Income minus expenses',
       icon: Wallet,
-      iconClass: (data?.net ?? 0) >= 0 ? 'text-green-500' : 'text-red-500',
+      iconClass: net >= 0 ? 'text-green-500' : 'text-red-500',
+      valueClass: net >= 0 ? 'text-green-600' : 'text-red-600',
     },
     {
       title: 'Outstanding',
@@ -56,6 +60,7 @@ export function StatCards() {
       sub: `${data?.outstandingCount ?? 0} invoice${(data?.outstandingCount ?? 0) !== 1 ? 's' : ''}`,
       icon: FileText,
       iconClass: 'text-amber-500',
+      valueClass: 'text-amber-600',
     },
   ]
 
@@ -68,7 +73,7 @@ export function StatCards() {
             <card.icon className={`h-4 w-4 ${card.iconClass}`} />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{card.value}</p>
+            <p className={`text-2xl font-bold ${card.valueClass}`}>{card.value}</p>
             <p className="text-xs text-muted-foreground mt-1">{card.sub}</p>
           </CardContent>
         </Card>

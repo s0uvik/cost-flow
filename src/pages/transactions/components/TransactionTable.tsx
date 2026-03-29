@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { Pencil, Trash2, ChevronLeft, ChevronRight, Banknote, CreditCard } from 'lucide-react'
+import { Pencil, Trash2, ChevronLeft, ChevronRight, Banknote, CreditCard, MoreVertical } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -8,6 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -38,6 +44,15 @@ export function TransactionTable({
   onDelete,
   onPageChange,
 }: Props) {
+  // Compute running balance across the current page (most recent first, so reverse for calc)
+  const balances: number[] = []
+  let running = 0
+  const reversed = [...data].reverse()
+  for (const tx of reversed) {
+    running += tx.type === 'income' ? tx.amount : -tx.amount
+    balances.unshift(running)
+  }
+
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
@@ -51,28 +66,30 @@ export function TransactionTable({
               <TableHead>Payment</TableHead>
               <TableHead>Account Details</TableHead>
               <TableHead className="text-right">Amount</TableHead>
-              <TableHead className="w-20" />
+              <TableHead className="text-right">Balance</TableHead>
+              <TableHead className="w-10" />
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading ? (
               Array.from({ length: 8 }).map((_, i) => (
                 <TableRow key={i}>
-                  {Array.from({ length: 8 }).map((_, j) => (
+                  {Array.from({ length: 9 }).map((_, j) => (
                     <TableCell key={j}><Skeleton className="h-4 w-full" /></TableCell>
                   ))}
                 </TableRow>
               ))
             ) : data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
+                <TableCell colSpan={9} className="text-center py-10 text-muted-foreground">
                   No transactions found
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((tx) => {
+              data.map((tx, i) => {
                 const isIncome = tx.type === 'income'
                 const cat = tx.categories
+                const balance = balances[i]
                 return (
                   <TableRow key={tx.id}>
                     <TableCell className="text-muted-foreground text-sm">
@@ -119,20 +136,30 @@ export function TransactionTable({
                     <TableCell className={`text-right font-semibold ${isIncome ? 'text-green-600' : 'text-red-600'}`}>
                       {isIncome ? '+' : '-'}{formatINR(tx.amount)}
                     </TableCell>
+                    <TableCell className={`text-right font-semibold ${balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {formatINR(balance)}
+                    </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-1 justify-end">
-                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onEdit(tx)}>
-                          <Pencil className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-destructive hover:text-destructive"
-                          onClick={() => onDelete(tx)}
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => onEdit(tx)}>
+                            <Pencil className="mr-2 h-3.5 w-3.5" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-destructive focus:text-destructive"
+                            onClick={() => onDelete(tx)}
+                          >
+                            <Trash2 className="mr-2 h-3.5 w-3.5" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 )

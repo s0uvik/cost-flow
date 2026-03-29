@@ -42,9 +42,6 @@ export function useTransactions(filters: Filters) {
         .from('transactions')
         .select('id, type, amount, description, date, notes, category_id, payment_method, payment_reference, categories(name, color)', { count: 'exact' })
         .eq('user_id', userId)
-        .order('date', { ascending: false })
-        .order('created_at', { ascending: false })
-        .range(filters.page * PAGE_SIZE, (filters.page + 1) * PAGE_SIZE - 1)
 
       if (filters.q) query = query.ilike('description', `%${filters.q}%`)
       if (filters.type) query = query.eq('type', filters.type)
@@ -52,6 +49,11 @@ export function useTransactions(filters: Filters) {
       if (filters.paymentMethod) query = query.eq('payment_method', filters.paymentMethod)
       if (filters.from) query = query.gte('date', filters.from)
       if (filters.to) query = query.lte('date', filters.to)
+
+      query = query
+        .order('date', { ascending: false })
+        .order('created_at', { ascending: false })
+        .range(filters.page * PAGE_SIZE, (filters.page + 1) * PAGE_SIZE - 1)
 
       const { data, count } = await query
       return {
