@@ -36,7 +36,7 @@ export function RequestAccessPage() {
               <div className="space-y-1">
                 <p className="text-sm font-medium">Email</p>
                 <a
-                  href="mailto:tonyr4311@gmail.com"
+                  href="mailto:tonyr4311@gmail.com?subject=Request%20Account%20Access&body=Hi%2C%0A%0AI%20would%20like%20to%20get%20started%20with%20expense%20tracking.%0A%0ABusiness%20Details%3A%0A-%20Company%20Name%3A%20%0A-%20Team%20Size%3A%20%0A-%20Use%20Case%3A%20%0A%0AThanks"
                   className="text-sm text-primary hover:underline"
                 >
                   tonyr4311@gmail.com
@@ -72,7 +72,7 @@ export function RequestAccessPage() {
       </CardContent>
       <CardFooter className="flex flex-col gap-3 px-6 py-4">
         <Button asChild className="w-full">
-          <a href="mailto:tonyr4311@gmail.com">Send us an Email</a>
+          <a href="mailto:tonyr4311@gmail.com?subject=Request%20Account%20Access&body=Hi%2C%0A%0AI%20would%20like%20to%20get%20started%20with%20expense%20tracking.%0A%0ABusiness%20Details%3A%0A-%20Company%20Name%3A%20%0A-%20Team%20Size%3A%20%0A-%20Use%20Case%3A%20%0A%0AThanks">Send us an Email</a>
         </Button>
         <div className="text-center text-sm">
           Already have an account?&nbsp;
