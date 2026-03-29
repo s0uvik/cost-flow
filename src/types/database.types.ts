@@ -53,6 +53,7 @@ export type Database = {
           tax_rate?: number
           updated_at?: string
         }
+        Relationships: []
       }
       categories: {
         Row: {
@@ -82,6 +83,7 @@ export type Database = {
           icon?: string | null
           is_default?: boolean
         }
+        Relationships: []
       }
       clients: {
         Row: {
@@ -115,6 +117,7 @@ export type Database = {
           notes?: string | null
           updated_at?: string
         }
+        Relationships: []
       }
       vendors: {
         Row: {
@@ -148,6 +151,15 @@ export type Database = {
           notes?: string | null
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "vendors_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       transactions: {
         Row: {
@@ -193,6 +205,29 @@ export type Database = {
           tags?: string[] | null
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       budgets: {
         Row: {
@@ -224,6 +259,15 @@ export type Database = {
           start_date?: string
           end_date?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "budgets_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       invoices: {
         Row: {
@@ -275,6 +319,15 @@ export type Database = {
           terms?: string | null
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       invoice_items: {
         Row: {
@@ -300,6 +353,15 @@ export type Database = {
           unit_price?: number
           sort_order?: number
         }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: Record<string, never>

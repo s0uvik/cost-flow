@@ -22,7 +22,7 @@ export function TransactionListPage() {
   const [editing, setEditing] = useState<TransactionRow | null>(null)
   const [deleting, setDeleting] = useState<TransactionRow | null>(null)
 
-  const { data, isLoading } = useTransactions({ q, type, categoryId, from, to, page })
+  const { data, isLoading } = useTransactions({ q, type: type as '' | 'income' | 'expense', categoryId, from, to, page })
 
   function handleEdit(tx: TransactionRow) {
     setEditing(tx)

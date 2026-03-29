@@ -46,7 +46,7 @@ export function useInvoices(filters: Filters) {
         .order('created_at', { ascending: false })
         .range(filters.page * PAGE_SIZE, (filters.page + 1) * PAGE_SIZE - 1)
 
-      if (filters.status) query = query.eq('status', filters.status)
+      if (filters.status) query = query.eq('status', filters.status as InvoiceStatus)
       if (filters.q) query = query.ilike('invoice_number', `%${filters.q}%`)
 
       const { data, count } = await query
