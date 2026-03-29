@@ -38,7 +38,10 @@ import type { TransactionRow } from "../hooks/useTransactions";
 const schema = z.object({
   type: z.enum(["income", "expense"]),
   amount: z.coerce.number().positive("Amount must be positive"),
-  description: z.string().min(1, "Name is required"),
+  description: z
+    .string()
+    .min(1, "Name is required")
+    .regex(/^[A-Za-z\s]+$/, "Only letters are allowed"),
   date: z.string().min(1, "Date is required"),
   category_id: z.string().nullable(),
   notes: z.string().nullable(),
@@ -171,6 +174,21 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
               )}
             />
 
+            {/* Name */}
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="What was this for?" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Amount */}
             <FormField
               control={form.control}
@@ -186,21 +204,6 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
                       placeholder="0.00"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Name */}
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="What was this for?" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -83,7 +83,7 @@ export function useReportsData(
         supabase
           .from("transactions")
           .select(
-            "id, type, amount, description, date, created_at, payment_method, payment_reference, category_id, vendor_id, client_id, categories(name, color), vendors(name), clients(name)"
+            "id, type, amount, description, notes, date, created_at, payment_method, payment_reference, category_id, vendor_id, client_id, categories(name, color), vendors(name), clients(name)"
           )
           .eq("user_id", userId)
           .gte("date", fromStr)

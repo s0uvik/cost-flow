@@ -67,7 +67,7 @@ export function TransactionTable({
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
-        <Table className="min-w-[900px]">
+        <Table className="min-w-262.5">
           <TableHeader>
             <TableRow>
               <TableHead>Date</TableHead>
@@ -78,6 +78,7 @@ export function TransactionTable({
               <TableHead>Account Details</TableHead>
               <TableHead className="text-right">Amount</TableHead>
               <TableHead className="text-right">Balance</TableHead>
+              <TableHead>Notes</TableHead>
               <TableHead className="w-10" />
             </TableRow>
           </TableHeader>
@@ -85,7 +86,7 @@ export function TransactionTable({
             {isLoading ? (
               Array.from({ length: 8 }).map((_, i) => (
                 <TableRow key={i}>
-                  {Array.from({ length: 9 }).map((_, j) => (
+                  {Array.from({ length: 10 }).map((_, j) => (
                     <TableCell key={j}>
                       <Skeleton className="h-4 w-full" />
                     </TableCell>
@@ -95,7 +96,7 @@ export function TransactionTable({
             ) : data.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={9}
+                  colSpan={10}
                   className="text-center py-10 text-muted-foreground"
                 >
                   No transactions found
@@ -174,6 +175,9 @@ export function TransactionTable({
                       className={`text-right font-semibold ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
                     >
                       {formatINR(balance)}
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground max-w-40 truncate">
+                      {tx.notes ?? <span className="text-xs">—</span>}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>

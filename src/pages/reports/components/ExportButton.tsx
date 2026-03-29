@@ -10,6 +10,7 @@ type RawTransaction = {
   type: string;
   amount: number;
   description: string;
+  notes: string | null;
   date: string;
   created_at: string;
   payment_method: string | null;
@@ -44,8 +45,8 @@ export function ExportButton({ range, rawTransactions }: Props) {
       const totalRows = rawTransactions.length;
       const periodLabel = `${format(new Date(range.from), "dd MMM yyyy")} – ${format(new Date(range.to), "dd MMM yyyy")}`;
 
-      // Banner rows span 8 columns (A–H)
-      ws.mergeCells("A1:H1");
+      // Banner rows span 9 columns (A–I)
+      ws.mergeCells("A1:I1");
       const titleCell = ws.getCell("A1");
       titleCell.value = "Transaction Report";
       titleCell.font = { bold: true, size: 14, color: { argb: "FFFFFFFF" } };
@@ -57,7 +58,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
       titleCell.alignment = { horizontal: "center", vertical: "middle" };
       ws.getRow(1).height = 30;
 
-      ws.mergeCells("A2:H2");
+      ws.mergeCells("A2:I2");
       const periodCell = ws.getCell("A2");
       periodCell.value = `Period: ${periodLabel}   |   ${totalRows} transaction${totalRows !== 1 ? "s" : ""}`;
       periodCell.font = { size: 10, color: { argb: "FF64748B" } };
@@ -69,7 +70,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
       periodCell.alignment = { horizontal: "center", vertical: "middle" };
       ws.getRow(2).height = 20;
 
-      // 8 columns — no Type column
+      // 9 columns — no Type column
       const headers = [
         "Transaction Date",
         "Name",
@@ -79,6 +80,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
         "Income (₹)",
         "Expense (₹)",
         "Balance (₹)",
+        "Notes",
       ];
 
       const headerRow = ws.addRow(headers);
@@ -105,6 +107,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
         { width: 16 }, // Income
         { width: 16 }, // Expense
         { width: 16 }, // Balance
+        { width: 28 }, // Notes
       ];
 
       let totalIncome = 0;
@@ -132,6 +135,7 @@ export function ExportButton({ range, rawTransactions }: Props) {
           isIncome ? formatINR(tx.amount) : "",
           !isIncome ? formatINR(tx.amount) : "",
           formatINR(runningBalance),
+          tx.notes ?? "—",
         ]);
 
         if (isIncome) {
@@ -177,10 +181,11 @@ export function ExportButton({ range, rawTransactions }: Props) {
         });
       }
 
-      // Totals footer — label col 5, income col 6, expense col 7
+      // Totals footer — label col 6, income col 7, expense col 8
       const net = totalIncome - totalExpense;
 
       const totalsRow = ws.addRow([
+        "",
         "",
         "",
         "",
@@ -190,25 +195,26 @@ export function ExportButton({ range, rawTransactions }: Props) {
         formatINR(totalExpense),
         "",
       ]);
-      totalsRow.getCell(5).font = { bold: true, size: 10 };
-      totalsRow.getCell(6).font = {
+      totalsRow.getCell(6).font = { bold: true, size: 10 };
+      totalsRow.getCell(7).font = {
         bold: true,
         color: { argb: "FF16A34A" },
         size: 10,
       };
-      totalsRow.getCell(6).alignment = { horizontal: "right" };
-      totalsRow.getCell(7).font = {
+      totalsRow.getCell(7).alignment = { horizontal: "right" };
+      totalsRow.getCell(8).font = {
         bold: true,
         color: { argb: "FFDC2626" },
         size: 10,
       };
-      totalsRow.getCell(7).alignment = { horizontal: "right" };
+      totalsRow.getCell(8).alignment = { horizontal: "right" };
       totalsRow.eachCell({ includeEmpty: true }, (cell, colNum) => {
-        if (colNum >= 5)
+        if (colNum >= 6)
           cell.border = { top: { style: "thin", color: { argb: "FFE2E8F0" } } };
       });
 
       const netRow = ws.addRow([
+        "",
         "",
         "",
         "",
@@ -218,13 +224,13 @@ export function ExportButton({ range, rawTransactions }: Props) {
         "",
         "",
       ]);
-      netRow.getCell(5).font = { bold: true, size: 10 };
-      netRow.getCell(6).font = {
+      netRow.getCell(6).font = { bold: true, size: 10 };
+      netRow.getCell(7).font = {
         bold: true,
         color: { argb: net >= 0 ? "FF16A34A" : "FFDC2626" },
         size: 10,
       };
-      netRow.getCell(6).alignment = { horizontal: "right" };
+      netRow.getCell(7).alignment = { horizontal: "right" };
 
       const buf = await wb.xlsx.writeBuffer();
       const fileName = `transactions_${range.from}_to_${range.to}.xlsx`;
