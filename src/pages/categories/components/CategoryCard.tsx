@@ -11,7 +11,7 @@ type Props = {
 
 export function CategoryCard({ category, onEdit, onDelete }: Props) {
   return (
-    <div className="flex items-center gap-3 rounded-lg border p-4 hover:bg-muted/40 transition-colors group">
+    <div className="flex items-center gap-3 rounded-lg border p-4 hover:bg-muted/40 transition-colors">
       {/* Color dot */}
       <div
         className="size-10 shrink-0 rounded-full flex items-center justify-center text-white text-sm font-bold"
@@ -40,7 +40,7 @@ export function CategoryCard({ category, onEdit, onDelete }: Props) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-1">
         <Button
           variant="ghost"
           size="icon"
