@@ -45,7 +45,7 @@ export function TransactionTable({
           <TableHeader>
             <TableRow>
               <TableHead>Date</TableHead>
-              <TableHead>Description</TableHead>
+              <TableHead>Name</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Type</TableHead>
               <TableHead className="text-right">Amount</TableHead>
