@@ -65,7 +65,8 @@ export function TransactionListPage() {
         title="Transactions"
         description="Track your income and expenses"
         action={
-          <Button onClick={() => setDialogOpen(true)}>
+          // Header add button: visible on large screens and up (hide on md and below)
+          <Button onClick={() => setDialogOpen(true)} className="hidden lg:inline-flex">
             <Plus className="mr-2 h-4 w-4" />
             Add Transaction
           </Button>
@@ -108,6 +109,16 @@ export function TransactionListPage() {
         transaction={deleting}
         onClose={() => setDeleting(null)}
       />
+
+      {/* Floating action button: visible on md and below (hidden on lg and up) */}
+      <button
+        type="button"
+        aria-label="Add Transaction"
+        onClick={() => setDialogOpen(true)}
+        className="fixed right-4 bottom-4 z-50 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg lg:hidden"
+      >
+        <Plus className="h-5 w-5" />
+      </button>
     </div>
   );
 }
