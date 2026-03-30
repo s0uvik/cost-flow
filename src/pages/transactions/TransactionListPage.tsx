@@ -115,9 +115,9 @@ export function TransactionListPage() {
         type="button"
         aria-label="Add Transaction"
         onClick={() => setDialogOpen(true)}
-        className="fixed right-4 bottom-4 z-50 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg lg:hidden"
+        className="fixed right-4 bottom-4 z-50 inline-flex items-center justify-center w-14 h-14 rounded-full bg-black text-white shadow-lg lg:hidden"
       >
-        <Plus className="h-5 w-5" />
+        <Plus className="h-7 w-7" />
       </button>
     </div>
   );
