@@ -177,6 +177,7 @@ export type Database = {
           tags: string[] | null;
           payment_method: "cash" | "account";
           payment_reference: string | null;
+          balance: number;
           created_at: string;
           updated_at: string;
         };

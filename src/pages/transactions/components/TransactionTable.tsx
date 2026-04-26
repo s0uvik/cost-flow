@@ -55,15 +55,6 @@ export function TransactionTable({
   onDelete,
   onPageChange,
 }: Props) {
-  // Compute running balance across the current page (most recent first, so reverse for calc)
-  const balances: number[] = [];
-  let running = 0;
-  const reversed = [...data].reverse();
-  for (const tx of reversed) {
-    running += tx.type === "income" ? tx.amount : -tx.amount;
-    balances.unshift(running);
-  }
-
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
@@ -103,10 +94,10 @@ export function TransactionTable({
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((tx, i) => {
+              data.map((tx) => {
                 const isIncome = tx.type === "income";
                 const cat = tx.categories;
-                const balance = balances[i];
+                const balance = tx.balance;
                 return (
                   <TableRow key={tx.id}>
                     <TableCell className="text-muted-foreground text-sm">

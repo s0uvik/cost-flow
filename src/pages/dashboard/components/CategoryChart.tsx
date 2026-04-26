@@ -28,7 +28,7 @@ export function CategoryChart() {
     <Card>
       <CardHeader>
         <CardTitle>Expenses by Category</CardTitle>
-        <CardDescription>This month</CardDescription>
+        <CardDescription>All time</CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (

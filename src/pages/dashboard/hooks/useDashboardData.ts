@@ -7,9 +7,11 @@ function useUserId() {
     queryKey: ["auth", "user"],
     queryFn: async () => {
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      return user;
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+      if (error) throw error;
+      return session?.user ?? null;
     },
     staleTime: Infinity,
   });
@@ -23,23 +25,20 @@ export function useDashboardStats() {
     queryKey: ["dashboard", "stats", userId],
     enabled: !!userId,
     queryFn: async () => {
-      const now = new Date();
-      const monthStart = format(startOfMonth(now), "yyyy-MM-dd");
-      const monthEnd = format(endOfMonth(now), "yyyy-MM-dd");
-
       const [txRes, invRes] = await Promise.all([
         supabase
           .from("transactions")
           .select("type, amount")
-          .eq("user_id", userId!)
-          .gte("date", monthStart)
-          .lte("date", monthEnd),
+          .eq("user_id", userId!),
         supabase
           .from("invoices")
           .select("total, status")
           .eq("user_id", userId!)
           .in("status", ["sent", "overdue"]),
       ]);
+
+      if (txRes.error) throw txRes.error;
+      if (invRes.error) throw invRes.error;
 
       const txns = txRes.data ?? [];
       const invoices = invRes.data ?? [];
@@ -75,12 +74,13 @@ export function useMonthlyChart() {
       const rangeStart = format(startOfMonth(subMonths(now, 5)), "yyyy-MM-dd");
       const rangeEnd = format(endOfMonth(now), "yyyy-MM-dd");
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("transactions")
         .select("type, amount, date")
         .eq("user_id", userId!)
         .gte("date", rangeStart)
         .lte("date", rangeEnd);
+      if (error) throw error;
 
       const months: Record<
         string,
@@ -113,18 +113,13 @@ export function useCategoryExpenses() {
     queryKey: ["dashboard", "category-expenses", userId],
     enabled: !!userId,
     queryFn: async () => {
-      const now = new Date();
-      const monthStart = format(startOfMonth(now), "yyyy-MM-dd");
-      const monthEnd = format(endOfMonth(now), "yyyy-MM-dd");
-
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("transactions")
         .select("amount, categories(name, color)")
         .eq("user_id", userId!)
         .eq("type", "expense")
-        .gte("date", monthStart)
-        .lte("date", monthEnd)
         .not("category_id", "is", null);
+      if (error) throw error;
 
       const byCategory: Record<
         string,
@@ -158,13 +153,14 @@ export function useRecentTransactions() {
     queryKey: ["dashboard", "recent-transactions", userId],
     enabled: !!userId,
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("transactions")
         .select("id, type, amount, description, date, categories(name, color)")
         .eq("user_id", userId!)
         .order("date", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(5);
+      if (error) throw error;
 
       return data ?? [];
     },
@@ -199,6 +195,9 @@ export function useBudgetOverview() {
           .gte("date", monthStart)
           .lte("date", monthEnd),
       ]);
+
+      if (budgetsRes.error) throw budgetsRes.error;
+      if (txRes.error) throw txRes.error;
 
       const budgets = budgetsRes.data ?? [];
       const txns = txRes.data ?? [];

@@ -37,7 +37,7 @@ export function StatCards() {
     {
       title: "Income",
       value: formatCurrency(data?.income ?? 0),
-      sub: "This month",
+      sub: "All time",
       icon: TrendingUp,
       iconClass: "text-green-500",
       valueClass: "text-green-600",
@@ -45,7 +45,7 @@ export function StatCards() {
     {
       title: "Expenses",
       value: formatCurrency(data?.expenses ?? 0),
-      sub: "This month",
+      sub: "All time",
       icon: TrendingDown,
       iconClass: "text-red-500",
       valueClass: "text-red-600",

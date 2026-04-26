@@ -12,6 +12,7 @@ export type TransactionRow = {
   categories: { name: string; color: string } | null;
   payment_method: "cash" | "account";
   payment_reference: string | null;
+  balance: number;
 };
 
 type Filters = {
@@ -43,7 +44,7 @@ export function useTransactions(filters: Filters) {
       let query = supabase
         .from("transactions")
         .select(
-          "id, type, amount, description, date, notes, category_id, payment_method, payment_reference, categories(name, color)",
+          "id, type, amount, description, date, notes, category_id, payment_method, payment_reference, balance, categories(name, color)",
           { count: "exact" }
         )
         .eq("user_id", userId);
