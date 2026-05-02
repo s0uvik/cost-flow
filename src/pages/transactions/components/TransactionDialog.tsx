@@ -243,7 +243,7 @@ export function TransactionDialog({ open, editing, onClose }: Props) {
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent className=" h-44 overflow-y-auto">
                       <SelectItem value="none">No category</SelectItem>
                       {filteredCategories?.map((cat) => (
                         <SelectItem key={cat.id} value={cat.id}>
